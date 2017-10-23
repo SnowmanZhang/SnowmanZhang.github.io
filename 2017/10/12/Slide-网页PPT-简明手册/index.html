@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2017/10/12/Slide-网页PPT-简明手册/1.png">
 <meta property="og:image" content="http://yoursite.com/2017/10/12/Slide-网页PPT-简明手册/2.png">
-<meta property="og:updated_time" content="2017-10-15T12:41:27.779Z">
+<meta property="og:updated_time" content="2017-10-21T08:13:26.500Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Slide-网页PPT-简明手册">
 <meta name="twitter:description" content="本文旨在提供一份使用markdown生成Slide(网页PPT)的简明手册，系爬虫俱乐部内部使用">
@@ -453,7 +453,7 @@
 <p>在cmd中输入命令<code>pandoc -t revealjs -s 唐多令.md -o 唐多令.html --section-divs -V center:false</code></p>
 <h1 id="3-改进——了解一点点CSS"><a href="#3-改进——了解一点点CSS" class="headerlink" title="3.改进——了解一点点CSS"></a>3.改进——了解一点点CSS</h1><p>在我们已经学会了基本的生成Slide的方法后，不可避免地我们要做一些视觉上的改进。</p>
 <p>比如当单页内容太少时，我们希望让它的字体更大一些</p>
-<h2 id="直接进入html中更改"><a href="#直接进入html中更改" class="headerlink" title="直接进入html中更改"></a>直接进入html中更改</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">"刘过"</span> <span class="attr">class</span>=<span class="string">"level2"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>刘过<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一首很优美的词作<span class="tag">&lt;/<span class="name">p</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="直接进入html中更改"><a href="#直接进入html中更改" class="headerlink" title="直接进入html中更改"></a>直接进入html中更改</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;section id=&quot;刘过&quot; class=&quot;level2&quot;&gt;</div><div class="line">&lt;h2&gt;刘过&lt;/h2&gt;</div><div class="line">&lt;p&gt;这是一首很优美的词作&lt;/p&gt; </div><div class="line">&lt;/section&gt;</div></pre></td></tr></table></figure>
 <p>改为</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">section</span> <span class="attr">id</span>=<span class="string">"刘过"</span> <span class="attr">class</span>=<span class="string">"level2"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>刘过<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">"font-size:2.5em"</span>&gt;</span>这是一首很优美的词作<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>即：直接在html代码中添加标签的style，更改该标签的文字字体大小</p>
@@ -588,7 +588,7 @@
               <p class="site-description motion-element" itemprop="description">Time After Time</p>
           </div>
           <div id="music163player">
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=30500857&auto=1&height=66"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=30500857&auto=0&height=66"></iframe>
 </div>
           <nav class="site-state motion-element">
 
@@ -597,7 +597,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -619,7 +619,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
