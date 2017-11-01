@@ -117,7 +117,7 @@ categories:
 
 ## 直接进入html中更改
 
-```html
+```
 <section id="刘过" class="level2">
 <h2>刘过</h2>
 <p>这是一首很优美的词作</p> 
