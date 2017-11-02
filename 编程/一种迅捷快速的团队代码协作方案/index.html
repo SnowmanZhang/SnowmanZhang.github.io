@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://yoursite.com/编程/一种迅捷快速的团队代码协作方案/5.png">
 <meta property="og:image" content="http://yoursite.com/编程/一种迅捷快速的团队代码协作方案/6.png">
 <meta property="og:image" content="http://yoursite.com/编程/一种迅捷快速的团队代码协作方案/7.png">
-<meta property="og:updated_time" content="2017-11-02T15:58:03.224Z">
+<meta property="og:updated_time" content="2017-11-02T23:58:08.076Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一种迅捷快速的团队代码协作方案">
 <meta name="twitter:description" content="本篇文章向爬虫俱乐部的同学们种草一种代码协作方案，在介绍之前，先问问大家在日常敲代码时有没有如下痛点：  这是一份有点麻烦的do文档，前前后后修改了很多次，但是经常需要回撤版本(因为自己写错了啊魂淡)，不幸自己没有存份(每次修改完习惯性ctrl+s的人表示只有这独一份do文档) 这次的项目需要多人协作，但是..往往大家手上do文档的”版本”不同，只好用U盘或者微信把最新版的do文档漫天传 一次性想">
@@ -472,13 +472,14 @@
 <p>其余选项大家一律默认即可</p>
 <p>安装成功后，在cmd中输入git可以查看所安装版本信息</p>
 <p><img src="3.png" alt=""></p>
+<p>PS：如果是之前安装了git bash的同学在cmd中没有测试成功，是因为在安装时未将git所在目录添加进环境变量，添加之即可。当然，使用bash同样可以操作。不必顾虑。</p>
 <h2 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h2><p>现在打开cmd 命令行，cd到一个合适的地方(比如你新建一个文件夹，决定以后所有的project都存在于此，那么你就cd到这个地方)。我cd到了 E:/GitHub 文件夹里</p>
 <p><img src="2.png" alt=""></p>
 <p>然后输入<code>git clone https://gitee.com/stata-club/one.git</code></p>
 <p><img src="4.png" alt=""></p>
 <p>可以看到，我们正在下载东西，这个地址是我在<code>码云</code>网站上存放的一个代码库，它和GitHub是一个性质，但是允许我们使用免费的私人仓库，我们所分享的文件不为外人所见。</p>
 <p>在下载完毕后，我们就可以在你设立的文件夹内找到一个名为<code>one</code>的子文件夹，这里面是我上传的关于机器学习几种常见算法的python实现源码，作为大家学会使用git的小奖励~~</p>
-<h2 id="现在我们可以做什么"><a href="#现在我们可以做什么" class="headerlink" title="现在我们可以做什么"></a>现在我们可以做什么</h2><p>1.上传文件<br>    如果你想要把小伙伴的代码稍作修改再传回去，可以怎样做呢？我们首先将修改后的文件依旧放在这个<code>one</code>文件夹里，然后打开cmd，输入如下命令<br>    <code>git add .</code><br>    <code>git commit -m&quot;你想对本次更新说的话&quot;</code><br>    <code>git push</code><br>    之后，它会弹出消息框要求你输入账户及密码，这很明显————既然是私人仓库，当然需要有<code>通行证</code>来验证身份<br>    我们的账户名是 <code>zhijunzhang_hi@163.com</code>  密码是我们的投稿邮箱名 <code>stXXXing</code><br>    输入完毕后，它就会开始上传。事实上，使用这种方式进行上传的速度，是非常快的。<br>2.更新文件<br>    好了，现在对面的小伙伴已经把修改后的代码更新到了云端仓库里了，现在我应该怎样把它拿下来呢？<br>    还是在<code>one</code>这个文件夹里，打开cmd(cd到该文件夹)，然后输入命令<br>    <code>git pull</code><br>    文件就会自动更新完毕。————炫爆了，对不对，飞一样的感觉</p>
+<h2 id="现在我们可以做什么"><a href="#现在我们可以做什么" class="headerlink" title="现在我们可以做什么"></a>现在我们可以做什么</h2><p>1.上传文件<br>    如果你想要把小伙伴的代码稍作修改再传回去，可以怎样做呢？我们首先将修改后的文件依旧放在这个<code>one</code>文件夹里，然后打开cmd，输入如下命令<br>    <code>git add .</code><br>    <code>git commit -m&quot;你想对本次更新说的话&quot;</code><br>    <code>git push</code><br>    之后，它会弹出消息框要求你输入账户及密码，这很明显————既然是云端仓库，当然需要有<code>通行证</code>来验证身份<br>    我们的账户名是 <code>zhijunzhang_hi@163.com</code>  密码是我们的投稿邮箱名 <code>stXXXing</code><br>    输入完毕后，它就会开始上传。事实上，使用这种方式进行上传的速度，是非常快的。<br>2.更新文件<br>    好了，现在对面的小伙伴已经把修改后的代码更新到了云端仓库里了，现在我应该怎样把它拿下来呢？<br>    还是在<code>one</code>这个文件夹里，打开cmd(cd到该文件夹)，然后输入命令<br>    <code>git pull</code><br>    文件就会自动更新完毕。————炫爆了，对不对，飞一样的感觉</p>
 <h2 id="新的仓库"><a href="#新的仓库" class="headerlink" title="新的仓库"></a>新的仓库</h2><p>如果你想传送专门的一些文件，可以登陆我们在码云的账号，然后新建一个仓库，之前我们下载的仓库名是<code>one</code>，用于存放一些机器学习的源码，那么最好就不要在这个仓库里传一些无关的东西。</p>
 <p>创建新仓库的位置在这里</p>
 <p><img src="8.png" alt=""></p>
