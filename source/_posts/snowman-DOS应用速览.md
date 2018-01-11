@@ -19,7 +19,160 @@ categories:
 
 ### dir (directory)
 
-作用：     列出当前文件夹下的所有文件和文件夹，当然不包括隐藏的和系统文件。
+列出当前文件夹下的所有文件和文件夹，当然不包括隐藏的和系统文件。
+
+#### 举例
+
+在本机的用户文件夹`C:\Users\Machenike`下操作
+
+1. `dir`
+
+```
+ 驱动器 C 中的卷没有标签。
+ 卷的序列号是 A4DF-CE39
+
+ C:\Users\Machenike 的目录
+
+2018/01/09  11:05    <DIR>          .
+2018/01/09  11:05    <DIR>          ..
+2017/11/14  12:57    <DIR>          .anaconda
+2018/01/09  11:05            11,168 .bash_history
+2017/11/14  14:29    <DIR>          .conda
+2017/11/14  12:57                43 .condarc
+2017/09/06  12:13               126 .defaults-0.1.0.ini
+2017/10/02  16:28               183 .gitconfig
+2017/09/13  08:19    <DIR>          .idlerc
+2017/11/14  13:00    <DIR>          .ipynb_checkpoints
+2017/11/14  13:01    <DIR>          .ipython
+2017/11/22  02:57    <DIR>          .jupyter
+2018/01/09  13:07    <DIR>          .matplotlib
+2017/10/18  21:15                58 .minttyrc
+2017/10/31  18:31               106 .node_repl_history
+2017/09/02  21:14    <DIR>          .oracle_jre_usage
+2017/09/02  21:24    <DIR>          .PyCharmCE2017.2
+2018/01/09  13:07    <DIR>          .spyder-py3
+2017/10/14  13:12    <DIR>          .ssh
+2017/09/25  15:35             9,488 .v8flags.5.1.281.107.cbfbe083657fef000920ceab40466420.json
+2017/12/04  11:07             7,559 .viminfo
+2018/01/05  14:53    <DIR>          Anaconda3
+2018/01/05  23:16    <DIR>          Contacts
+2018/01/06  11:10    <DIR>          Desktop
+2018/01/05  23:16    <DIR>          Documents
+2018/01/05  23:16    <DIR>          Downloads
+2017/10/19  19:02                 0 exam.html
+2018/01/05  23:16    <DIR>          Favorites
+2017/10/28  14:27             8,351 huhuan.md
+2017/05/04  11:29    <DIR>          Intel
+2018/01/05  23:16    <DIR>          Links
+2018/01/05  23:16    <DIR>          Music
+2017/09/03  19:18         1,408,775 mygettext.html
+2017/12/15  15:32    <DIR>          OneDrive
+2018/01/05  23:16    <DIR>          Pictures
+2017/09/05  19:33    <DIR>          PycharmProjects
+2017/05/04  11:35    <DIR>          Roaming
+2018/01/05  23:16    <DIR>          Saved Games
+2018/01/05  23:16    <DIR>          Searches
+2017/11/14  13:09             5,739 Untitled.ipynb
+2017/11/14  12:58                 0 untitled.txt
+2018/01/09  14:49    <DIR>          Videos
+2017/09/19  20:08    <DIR>          新建文件夹
+              13 个文件      1,451,596 字节
+              30 个目录 27,367,956,480 可用字节
+```
+
+2. `dir /ad /od /ta /b`
+
+- /ad 表示只显示目录，其中a表示属性，d表示dir，更多具体的参数详见参数参考一节
+- /od 表示按日期顺序排列列表，o表示order，d表示datetime
+- /ta 表示日期使用上次访问时间，t表示time，a表示access
+- /b 表示使用空格式，也就是只显示文件名，其它的一概不现实
+
+```
+PrintHood
+Application Data
+NetHood
+SendTo
+My Documents
+Recent
+「开始」菜单
+Cookies
+Templates
+AppData
+Local Settings
+Contacts
+Music
+Saved Games
+Pictures
+OneDrive
+Intel
+Roaming
+Favorites
+Searches
+.oracle_jre_usage
+.PyCharmCE2017.2
+PycharmProjects
+.idlerc
+新建文件夹
+.ssh
+wc
+Documents
+.anaconda
+.ipynb_checkpoints
+.ipython
+.conda
+.jupyter
+Links
+Anaconda3
+Downloads
+Desktop
+IntelGraphicsProfiles
+.spyder-py3
+.matplotlib
+Videos
+
+```
+
+3. `dir E:/pythonabc /-c /q`
+
+- /-c 表示去除掉文件大小中的逗号，因给字节加上千分位符号为默认设置，故-c以关闭，事实上所有的参数都可以用-表示反向开关
+- /q 表示文件所有者
+
+```
+2018/01/04  15:14    <DIR>          DESKTOP-BRRT43V\Macheni.
+2018/01/04  15:14    <DIR>          NT AUTHORITY\SYSTEM    ..
+2017/08/30  13:19    <DIR>          DESKTOP-BRRT43V\Macheni.idea
+2017/11/28  14:24    <DIR>          DESKTOP-BRRT43V\Machenibiotree
+2017/12/05  21:33    <DIR>          DESKTOP-BRRT43V\Machenichuangyebang
+2017/11/12  20:58              4531 DESKTOP-BRRT43V\Machenichuangyebang.zip
+2017/12/26  18:05    <DIR>          DESKTOP-BRRT43V\Machenicompany1109
+2017/11/09  21:48           3427352 DESKTOP-BRRT43V\Machenicorp.csv
+2017/11/01  21:09    <DIR>          DESKTOP-BRRT43V\Machenieluosifangkuai
+2017/08/30  18:41    <DIR>          DESKTOP-BRRT43V\MacheniEXERCISE
+2017/08/30  13:40    <DIR>          DESKTOP-BRRT43V\Machenijiebapro
+2017/11/08  09:57    <DIR>          DESKTOP-BRRT43V\Machenilibrary
+2018/01/04  15:13    <DIR>          DESKTOP-BRRT43V\Machenilistdir_exe
+2018/01/04  15:14          18674398 DESKTOP-BRRT43V\Machenilistdir_exe.rar
+2017/11/04  00:09    <DIR>          DESKTOP-BRRT43V\Machenimachinelearning
+2017/10/23  09:13          39355559 DESKTOP-BRRT43V\MacheniML.pdf
+2017/08/31  15:56    <DIR>          DESKTOP-BRRT43V\Macheninlp
+2018/01/09  13:52    <DIR>          DESKTOP-BRRT43V\MacheniPPPpro
+2017/09/08  20:57    <DIR>          DESKTOP-BRRT43V\Machenipynlpir
+2017/10/31  16:51    <DIR>          DESKTOP-BRRT43V\Machenipython_standard
+2017/04/19  10:31          29809397 DESKTOP-BRRT43V\MacheniPython核心编程（第3版）.epub
+2017/08/30  11:45           4255871 DESKTOP-BRRT43V\MacheniPYTHON自然语言处理_中文版.pdf
+2017/07/02  18:33          49789379 DESKTOP-BRRT43V\MacheniPython金融大数据分析.pdf
+2017/11/08  10:14    <DIR>          DESKTOP-BRRT43V\Machenipy_mysql
+2017/11/08  10:00    <DIR>          DESKTOP-BRRT43V\Machenireference
+2017/12/02  19:14    <DIR>          DESKTOP-BRRT43V\Machenissecom
+2017/11/12  20:32    <DIR>          DESKTOP-BRRT43V\Machenitemp
+2017/12/29  11:15    <DIR>          DESKTOP-BRRT43V\Machenizhengxuan1229
+2017/09/24  10:56           8709214 DESKTOP-BRRT43V\Macheni《Python标准库》-迷你书.pdf
+2018/01/05  01:25    <DIR>          DESKTOP-BRRT43V\Macheni细碎程序
+               8 个文件      154025701 字节
+              22 个目录   209876656128 可用字节
+```
+
+#### 参数一览表
 
 ```
 e:\>dir /?
@@ -67,6 +220,21 @@ DIR [drive:][path][filename] [/A[[:]attributes]] [/B] [/C] [/D] [/L] [/N]
 
 ### cd (change directory)
 
+#### 举例
+
+1. cd ./.ssh
+
+./ 表示当前目录，在前面dir命令中也可以看到，每一个地址下都有两个目录，一个是`.`，一个是`..`，前者表示当前目录本身，后者表示上一级目录地址，该命令将跳转至当前目录的子目录`.ssh`中。
+
+2. cd ../..
+
+该命令将跳至父目录的父目录(如果有的话)，如果已到驱动器根目录上，如`C:\>`，则会不变
+
+3. cd /d f:/dirname
+
+该命令可以跨驱动器跳转，如从C盘跳至F盘中的某目录，/d即表示启动跨驱动器开关
+
+#### 参数一览表
 
 ```
 e:\>cd /?
@@ -104,6 +272,10 @@ CHDIR 命令不把空格当作分隔符，因此有可能将目录名改为一�
 ```
 
 ### move 
+
+#### 举例
+
+#### 参数一览表
 
 ```
 d:\>move /?
@@ -198,6 +370,8 @@ ERASE [/P] [/F] [/S] [/Q] [/A[[:]attributes]] names
 
 ### md\mkdir  (makedirectory)
 
+需注意的是，mkdir的迭代生成是自动开启的，故若你在python中调用os进行文件夹创建时，若字符串中含有`/`或`\\`，则多层文件夹会自动生成不会报错。
+
 ```
 d:\>md /?
 创建目录。
@@ -227,6 +401,17 @@ MD [drive:]path
 ```
 
 ### rd/rmdir (removedirectory)
+
+#### 举例
+
+`rmdir E:/pythonabc /s /q`
+
+代表将E盘下名为`pythonabc`的文件夹及其所有内容均删除
+
+/s 表示删除文件夹下的所有内容
+/q 表示在/s开启后，不对删除每个文件进行 \[y/n\]? 的确认
+
+#### 参数一览表
 
 ```
 d:\>rd /?
