@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Time After Time">
+<meta name="description" content="这一周讲的代码不多，主要都是一些基础知识，比如时间复杂度，个人认为这个还是比较有用的，至少比单纯地做做题目要有用得多。另外就是本章讲了二分算法。这一问题的应用确实比较广，也确实值得单列一章。  一个程序或算法的时间效率，也称“时间复杂度”，有时简称“复杂度” 复杂度常用大的字母O和小写字母n来表示，比如O(n),O(n2)等。n代表问题 的规模 时间复杂度是用算法运行过程中，某种时间固定的操作需要">
 <meta name="keywords" content="算法,MOOC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MOOC-Algorithm-chapter4">
 <meta property="og:url" content="http://yoursite.com/编程/MOOC-Algorithm-chapter4/index.html">
 <meta property="og:site_name" content="Snowman Home">
-<meta property="og:description" content="Time After Time">
+<meta property="og:description" content="这一周讲的代码不多，主要都是一些基础知识，比如时间复杂度，个人认为这个还是比较有用的，至少比单纯地做做题目要有用得多。另外就是本章讲了二分算法。这一问题的应用确实比较广，也确实值得单列一章。  一个程序或算法的时间效率，也称“时间复杂度”，有时简称“复杂度” 复杂度常用大的字母O和小写字母n来表示，比如O(n),O(n2)等。n代表问题 的规模 时间复杂度是用算法运行过程中，某种时间固定的操作需要">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-16T11:54:20.678Z">
+<meta property="og:updated_time" content="2018-01-16T12:55:05.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MOOC-Algorithm-chapter4">
-<meta name="twitter:description" content="Time After Time">
+<meta name="twitter:description" content="这一周讲的代码不多，主要都是一些基础知识，比如时间复杂度，个人认为这个还是比较有用的，至少比单纯地做做题目要有用得多。另外就是本章讲了二分算法。这一问题的应用确实比较广，也确实值得单列一章。  一个程序或算法的时间效率，也称“时间复杂度”，有时简称“复杂度” 复杂度常用大的字母O和小写字母n来表示，比如O(n),O(n2)等。n代表问题 的规模 时间复杂度是用算法运行过程中，某种时间固定的操作需要">
 
 
 
@@ -445,7 +445,34 @@
       
 
       
-        
+        <p>这一周讲的代码不多，主要都是一些基础知识，比如时间复杂度，个人认为这个还是比较有用的，至少比单纯地做做题目要有用得多。另外就是本章讲了二分算法。这一问题的应用确实比较广，也确实值得单列一章。</p>
+<ul>
+<li>一个程序或算法的时间效率，也称“时间复杂度”，有时简称“复杂度”</li>
+<li>复杂度常用大的字母O和小写字母n来表示，比如O(n),O(n2)等。n代表问题 的规模</li>
+<li>时间复杂度是用算法运行过程中，某种时间固定的操作需要被执行的次数和n 的关系来度量的。在无序数列中查找某个数，复杂度是O(n)</li>
+<li>计算复杂度的时候，只统计执行次数最多的(n足够大时)那种固定操作的次数 。比如某个算法需要执行加法n2次，除法n次，那么就记其复杂度是O(n2)的。</li>
+</ul>
+<p>如果复杂度是多个n的函数之和，则只关心随n的增长增长得最快的那个函 数<br>O(n3+n2) =&gt; O(n3)<br>O(2n+n3) =&gt; O(2n)<br>O(n! + 3n) =&gt; O(n!)<br>常数复杂度：O(1) 时间(操作次数)和问题的规模无关<br>对数复杂度：O(log(n))<br>线性复杂度：O(n)<br>多项式复杂度：O(nk )<br>指数复杂度：O(an )<br>阶乘复杂度：O(n! )</p>
+<p><strong>举例</strong></p>
+<p>在无序数列中查找某个数(顺序查找) O(n)<br>平面上有n个点，要求出任意两点之间的距离 O(n2)<br>插入排序、选择排序、冒泡排序 O(n2)<br>快速排序 O( n*log(n))<br>二分查找 O(log(n))</p>
+<h2 id="1-二分法求根"><a href="#1-二分法求根" class="headerlink" title="1.二分法求根"></a>1.二分法求根</h2><p><strong>题目描述</strong> 求下面方程的一个根：f(x) = x3-5x2+10x-80 = 0 若求出的根是a，则要求 |f(a)| &lt;= 10^-6</p>
+<p>这个题目是典型的二分法解决，当然我们存在更优解法，如牛顿迭代法及更多最优化算法。这个里面需要注意的一点是，当根的解为浮点型时，我们不能要求解是等于某个值的，只能说该近似解的误差在某一个量级以内，这是因为计算机的二进制编码无法精准表示十进制浮点数，之所以我们可以“照常”计算浮点数，只是后台的近似处理结果，事实上大部分十进制浮点数都在计算机内存中以一个近似值存储。所以我们不能使用 <code>==</code> 来判断是否得到了正解。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> EPS = <span class="number">1e-6</span>;</div><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">f</span><span class="params">(<span class="keyword">double</span> x)</span></span>&#123;<span class="keyword">return</span> x*x*x - <span class="number">5</span>*x*x + <span class="number">10</span>*x <span class="number">-80</span>;&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">BinaryMethod</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">double</span> root ,x1=<span class="number">0</span>,x2=<span class="number">100</span>,y;</div><div class="line">    root = x1 + (x2-x1)/<span class="number">2</span>;</div><div class="line">    <span class="keyword">int</span> triedTimes =<span class="number">1</span>;</div><div class="line">    y = f(root);</div><div class="line">    <span class="keyword">while</span>(<span class="built_in">fabs</span>(y) &gt; EPS)&#123;</div><div class="line">        <span class="keyword">if</span>(y&gt;<span class="number">0</span>) x2= root;</div><div class="line">        <span class="keyword">else</span>    x1=root;</div><div class="line">        root = x1 + (x2-x1)/<span class="number">2</span>;</div><div class="line">        y = f(root);</div><div class="line">        triedTimes++;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%.8f\n"</span>,root);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,triedTimes);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="2-寻一对数"><a href="#2-寻一对数" class="headerlink" title="2. 寻一对数"></a>2. 寻一对数</h2><p><strong>问题描述</strong> 输入n ( n&lt;= 100,000)个整数，找出其中的两个数，它们之和等于整数m(假定 肯定有解)。题中所有整数都能用 int 表示</p>
+<p>解法一</p>
+<ol>
+<li>将数组排序，复杂度是O(n×log(n)) </li>
+<li>对数组中的每个元素a[i],在数组中二分查找m-a[i]，看能否找到。复杂度log(n)，最 坏要查找n-2次，所以查找这部分的复杂度也是O(n×log(n))</li>
+</ol>
+<p>这种解法总的复杂度是O(n×log(n))的。</p>
+<p>解法二</p>
+<ol>
+<li>将数组排序，复杂度是O(n×log(n)) </li>
+<li>查找的时候，设置两个变量i和j,i初值是0,j初值是n-1.看a[i]+a[j],如果大于m，就让j 减1，如果小于m,就让i加1，直至a[i]+a[j]=m。</li>
+</ol>
+<p>这种解法总的复杂度是O(n×log(n))的。</p>
+<p><strong>感想</strong> 就这两种解法来说，第一种解法一开始是想到了，第二个解法的从两段往中间检索的法子确实是聪明。能够减少相当一部分复杂度(最主要是可以少写两重循环，让程序更加易读)</p>
+
       
     </div>
     
@@ -535,8 +562,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -604,6 +640,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-二分法求根"><span class="nav-number">1.</span> <span class="nav-text">1.二分法求根</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-寻一对数"><span class="nav-number">2.</span> <span class="nav-text">2. 寻一对数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
