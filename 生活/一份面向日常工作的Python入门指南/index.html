@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/生活/一份面向日常工作的Python入门指南/file_explorer.png">
 <meta property="og:image" content="http://yoursite.com/生活/一份面向日常工作的Python入门指南/history_log.png">
 <meta property="og:image" content="http://yoursite.com/生活/一份面向日常工作的Python入门指南/debug.png">
-<meta property="og:updated_time" content="2018-01-21T11:28:36.032Z">
+<meta property="og:updated_time" content="2018-01-21T13:40:25.611Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一份面向日常工作的Python入门指南">
 <meta name="twitter:description" content="近日准备一份关于面向日常工作的Python入门指南，所谓面向日常工作，意思即希望利用python开发一些解放日常工作的脚本。比如文件读写、数据处理、文本分析以及简单的爬虫技术，掌握了这些技术可以做什么呢？它可以批量化处理你手头的任务，可以自动化分析案头的任务，让你从繁重的手工劳动中解脱出来，更甚而言之，掌握一门编程语言，可以让你重新了解你的计算机，更好地利用它。 为什么要加上一个“面向日常工作”的">
@@ -459,18 +459,40 @@
 <p>本篇章主要讲解Python的一些基本计算、判断语句结构。为基础章节，为之后的应用打下基础。</p>
 </blockquote>
 <h2 id="1-1-第一个python程序"><a href="#1-1-第一个python程序" class="headerlink" title="1.1 第一个python程序"></a>1.1 第一个python程序</h2><h2 id="运算符及逻辑符号"><a href="#运算符及逻辑符号" class="headerlink" title="运算符及逻辑符号"></a>运算符及逻辑符号</h2><h3 id="算数运算符-加减乘除"><a href="#算数运算符-加减乘除" class="headerlink" title="算数运算符 加减乘除"></a>算数运算符 加减乘除</h3><h3 id="逻辑运算符-与或非等"><a href="#逻辑运算符-与或非等" class="headerlink" title="逻辑运算符 与或非等"></a>逻辑运算符 与或非等</h3><h2 id="容器简介-数据结构简介"><a href="#容器简介-数据结构简介" class="headerlink" title="容器简介(数据结构简介)"></a>容器简介(数据结构简介)</h2><p>所谓容器，即存储数据的结构，因此有的书本称之为数据结构教程。</p>
-<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>列表是一种可变化的容器，它用于存储一系列相同等级的数据，如班级同学名单。定义式如下</p>
-<p><code>name_list = [&#39;张三&#39;,&#39;李四&#39;,&#39;王五&#39;,&#39;王二小&#39;]</code></p>
-<p>如此一来我们就获得了一个列表，这个列表叫做name_list.那么我们如何表示李四这个名字呢？可以看到李四是列表中的第二个，我们可以通过列表下标获取。</p>
-<p><code>name = name_list[1]</code></p>
-<p>明明是第二个名字，为什么这里是1呢，因为对于容器来说，第一个序号都是0，而非1.</p>
-<p>列表的方法</p>
+<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>列表是一种可变化的容器，它用于存储一系列相同等级的数据，如班级同学名单、物品清单。</p>
 <ul>
+<li>索引<ul>
+<li>点取元素</li>
+<li>截取列表</li>
+<li>负向点取</li>
+<li>二维列表</li>
+</ul>
+</li>
+<li>方法<ul>
 <li>append</li>
 <li>index</li>
 <li>pop</li>
+<li>del</li>
 </ul>
-<h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><h2 id="流程控制语句"><a href="#流程控制语句" class="headerlink" title="流程控制语句"></a>流程控制语句</h2><h3 id="if"><a href="#if" class="headerlink" title="if"></a>if</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">a = <span class="number">15</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> a &gt; <span class="number">10</span>:</div><div class="line">    print(<span class="string">"这是一个大于10的数字"</span>)</div><div class="line">    <span class="keyword">if</span> a &gt; <span class="number">20</span>:</div><div class="line">        print(<span class="string">"这是一个大于20的数字"</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(<span class="string">"这是一个不大于20的数字"</span>)</div><div class="line"><span class="keyword">elif</span> a &gt; <span class="number">5</span>:</div><div class="line">    print(<span class="string">"这是一个大于5的数字"</span>)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    print(<span class="string">"这是一个不大于5的数字"</span>)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>需要说明的是，什么是可变化与不可变化，可变化的意思是说，这个容器里的内容是可以变更的，一个列表可以在建立以后在最后面添加元素，也可以删减元素，而不可变化的容器，一旦建立完毕，则不可更改其内容。</strong></p>
+<h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><p>字典是一种可变化的容器，它将数据以键值对的方式存储，键在字典中是唯一的，值可以不唯一。字典这一数据结构可以用于存储”什么是什么”这类数据。</p>
+<ul>
+<li>索引<ul>
+<li>通过键获取</li>
+<li>通过遍历获取</li>
+</ul>
+</li>
+<li>方法<ul>
+<li>items</li>
+<li>key</li>
+<li>del</li>
+</ul>
+</li>
+</ul>
+<h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><p>元组是一种不可更改的容器</p>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><h2 id="流程控制语句"><a href="#流程控制语句" class="headerlink" title="流程控制语句"></a>流程控制语句</h2><h3 id="if"><a href="#if" class="headerlink" title="if"></a>if</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">a = <span class="number">15</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> a &gt; <span class="number">10</span>:</div><div class="line">    print(<span class="string">"这是一个大于10的数字"</span>)</div><div class="line">    <span class="keyword">if</span> a &gt; <span class="number">20</span>:</div><div class="line">        print(<span class="string">"这是一个大于20的数字"</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(<span class="string">"这是一个不大于20的数字"</span>)</div><div class="line"><span class="keyword">elif</span> a &gt; <span class="number">5</span>:</div><div class="line">    print(<span class="string">"这是一个大于5的数字"</span>)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    print(<span class="string">"这是一个不大于5的数字"</span>)</div></pre></td></tr></table></figure>
 <h3 id="while"><a href="#while" class="headerlink" title="while"></a>while</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">a = <span class="number">1</span></div><div class="line"></div><div class="line"><span class="keyword">while</span> a &lt; <span class="number">10</span>:</div><div class="line">    print(a)</div><div class="line">    a += <span class="number">1</span></div></pre></td></tr></table></figure>
 <h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>]</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> a:</div><div class="line">    print(i)</div></pre></td></tr></table></figure>
 <h2 id="输入与输出"><a href="#输入与输出" class="headerlink" title="输入与输出"></a>输入与输出</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">url = input(<span class="string">"please input the url：\n"</span>)</div><div class="line">print(url)</div><div class="line"></div><div class="line">f = open(<span class="string">"something.txt"</span>,<span class="string">"r"</span>,encoding=<span class="string">"utf8"</span>)</div><div class="line"></div><div class="line">f.read()</div><div class="line"></div><div class="line">f.close()</div><div class="line"></div><div class="line"><span class="keyword">with</span> open(<span class="string">"something.txt"</span>,<span class="string">'r'</span>,encoding=<span class="string">'utf8'</span>) <span class="keyword">as</span> f:</div><div class="line">    f.read()</div><div class="line"></div><div class="line"><span class="keyword">with</span> open(<span class="string">"otherthing.txt"</span>,<span class="string">'w'</span>,encoding=<span class="string">'utf8'</span>) <span class="keyword">as</span> f:</div><div class="line">    f.write(<span class="string">"some word\n"</span>)</div><div class="line"></div><div class="line"><span class="keyword">import</span> pickle</div><div class="line"></div><div class="line">    a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">    <span class="keyword">with</span> open(<span class="string">"teaching.pkl"</span>,<span class="string">"wb"</span>) <span class="keyword">as</span> f:</div><div class="line">        pickle.dump(a,f)</div><div class="line">    <span class="keyword">with</span> open(<span class="string">"teaching.pkl"</span>,<span class="string">"rb"</span>) <span class="keyword">as</span> f:</div><div class="line">        new_list = pickle.load(f)</div></pre></td></tr></table></figure>
