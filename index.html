@@ -336,6 +336,234 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/编程/Linux-速查笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Snowman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/timeaftertime.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Snowman Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/编程/Linux-速查笔记/" itemprop="url">Linux-速查笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-30T19:44:37+08:00">
+                2018-01-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一份属于自己的快速查参笔记，这里参考的是Linuxcast的课程。</p>
+<h2 id="日期时间"><a href="#日期时间" class="headerlink" title="日期时间"></a>日期时间</h2><h3 id="date-查看操作系统时间"><a href="#date-查看操作系统时间" class="headerlink" title="date    查看操作系统时间"></a>date    查看操作系统时间</h3><p><code>-u</code> 查看UTC时间，默认是CST时间<br><code>+%Y--%m--%d</code>   修正时间的表示方法，其中<code>-</code>符号可以随意替换，其余不可更改<br><code>-s &quot;20:20:20&quot;</code> 修改24小时时间</p>
+<h3 id="hwclock-clock-查看硬件时钟时间"><a href="#hwclock-clock-查看硬件时钟时间" class="headerlink" title="hwclock(clock)     查看硬件时钟时间"></a>hwclock(clock)     查看硬件时钟时间</h3><h3 id="cal-查看日历"><a href="#cal-查看日历" class="headerlink" title="cal 查看日历"></a>cal 查看日历</h3><h3 id="uptime-查看当前系统的运行时间"><a href="#uptime-查看当前系统的运行时间" class="headerlink" title="uptime 查看当前系统的运行时间"></a>uptime 查看当前系统的运行时间</h3><p>当前计算机已经启动了多长时间，多少个用户，平均负载是多少。</p>
+<h2 id="输出查看命令"><a href="#输出查看命令" class="headerlink" title="输出查看命令"></a>输出查看命令</h2><h3 id="echo-显示输入的内容"><a href="#echo-显示输入的内容" class="headerlink" title="echo 显示输入的内容"></a>echo 显示输入的内容</h3><h3 id="cat-用以显示文件内容"><a href="#cat-用以显示文件内容" class="headerlink" title="cat 用以显示文件内容"></a>cat 用以显示文件内容</h3><p><code>cat somefile</code>  会显示文档的所有内容</p>
+<p>以下命令语法均为 <code>cmd somefile</code></p>
+<h3 id="head-用以显示文件的头几行-默认10行"><a href="#head-用以显示文件的头几行-默认10行" class="headerlink" title="head 用以显示文件的头几行(默认10行)"></a>head 用以显示文件的头几行(默认10行)</h3><p><code>-n number</code> 指定显示的行数</p>
+<h3 id="tail-用以显示文件的末尾几行-默认10行"><a href="#tail-用以显示文件的末尾几行-默认10行" class="headerlink" title="tail 用以显示文件的末尾几行(默认10行)"></a>tail 用以显示文件的末尾几行(默认10行)</h3><p><code>-n number</code>指定显示的行数<br><code>-f</code>追踪显示文件更新（一般用于查看日志，命令不会退出，而是持续显示新加入的内容）</p>
+<p>-f (follow)，一旦使用该命令，则不会退出，而是持续显示文件内容。</p>
+<h3 id="more-用于翻页显示文件内容-只能向下翻页"><a href="#more-用于翻页显示文件内容-只能向下翻页" class="headerlink" title="more 用于翻页显示文件内容(只能向下翻页)"></a>more 用于翻页显示文件内容(只能向下翻页)</h3><h3 id="less-用于翻页显示文件内容-带上下翻页"><a href="#less-用于翻页显示文件内容-带上下翻页" class="headerlink" title="less 用于翻页显示文件内容(带上下翻页)"></a>less 用于翻页显示文件内容(带上下翻页)</h3><h2 id="查看硬件信息"><a href="#查看硬件信息" class="headerlink" title="查看硬件信息"></a>查看硬件信息</h2><h3 id="lspci用以查看PCI类型的设备，如声卡网卡等等"><a href="#lspci用以查看PCI类型的设备，如声卡网卡等等" class="headerlink" title="lspci用以查看PCI类型的设备，如声卡网卡等等"></a>lspci用以查看PCI类型的设备，如声卡网卡等等</h3><p>输出的内容每一行是一个硬件信息</p>
+<p><code>-v</code>查看详细信息</p>
+<h3 id="lsusb用以查看USB设备"><a href="#lsusb用以查看USB设备" class="headerlink" title="lsusb用以查看USB设备"></a>lsusb用以查看USB设备</h3><p><code>-v</code>查看详细信息</p>
+<h3 id="lsmod用以查看加载的模块-驱动"><a href="#lsmod用以查看加载的模块-驱动" class="headerlink" title="lsmod用以查看加载的模块(驱动)"></a>lsmod用以查看加载的模块(驱动)</h3><h2 id="关机与重启"><a href="#关机与重启" class="headerlink" title="关机与重启"></a>关机与重启</h2><h3 id="shutdown"><a href="#shutdown" class="headerlink" title="shutdown"></a>shutdown</h3><p><code>-h</code> 关机<br><code>-r</code> 重启</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">shutdown -h now</div><div class="line">shutdown -h +10  十分钟后关机</div><div class="line">shutdown -h 23:40</div><div class="line">shutdown -r now  立即重启</div><div class="line"></div><div class="line">poweroff 立即关机</div><div class="line">reboot 立即重启计算机</div></pre></td></tr></table></figure>
+<h2 id="归档与压缩"><a href="#归档与压缩" class="headerlink" title="归档与压缩"></a>归档与压缩</h2><h3 id="zip-用以压缩文件"><a href="#zip-用以压缩文件" class="headerlink" title="zip 用以压缩文件"></a>zip 用以压缩文件</h3><p>zip somefile.zip myfile</p>
+<h3 id="unzip-解压缩文件"><a href="#unzip-解压缩文件" class="headerlink" title="unzip 解压缩文件"></a>unzip 解压缩文件</h3><p>unzip somefile</p>
+<h3 id="gzip-压缩文件"><a href="#gzip-压缩文件" class="headerlink" title="gzip 压缩文件"></a>gzip 压缩文件</h3><p>gzip somefile</p>
+<p>生成文件的后缀为.gz</p>
+<h3 id="tar-用以归档文件，打包命令"><a href="#tar-用以归档文件，打包命令" class="headerlink" title="tar 用以归档文件，打包命令"></a>tar 用以归档文件，打包命令</h3><p>归档非压缩</p>
+<p><code>tar -cvf out.tar somefile</code>  将somefile文件归档至out.tar文件<br><code>tar -xvf somefile.tar</code> 将somefile.tar 释放出来<br><code>tar -cvzf backup.tar.gz somefile</code> 将somefile文件归档至backup.tar，再压缩为backup.tar.gz</p>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><h3 id="locate-用以快速查找文件，文件夹"><a href="#locate-用以快速查找文件，文件夹" class="headerlink" title="locate 用以快速查找文件，文件夹"></a>locate 用以快速查找文件，文件夹</h3><p>locate keyword 查找整个计算机内含有<code>keyword</code>关键字的文件or文件夹</p>
+<p><code>updatedb</code> 用以更新索引数据库</p>
+<h3 id="find-用以高级查找文件与文件夹"><a href="#find-用以高级查找文件与文件夹" class="headerlink" title="find 用以高级查找文件与文件夹"></a>find 用以高级查找文件与文件夹</h3><p><code>find 查找位置 查找参数</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">find . -name *someword* 在当前目录下以文件名进行查找，查找 含有someword这个字样的文件名的文件。</div><div class="line">find / -name *.conf  查找在根目录下以.conf结尾的文件</div><div class="line">find / -perm 777    在根目录下查找所有权限为 777 的文件或文件夹</div><div class="line">find / -type d      在根目录下查找所有文件类型为d的文件(d表示目录，l表示链接)</div><div class="line">find . -name &quot;a*&quot; -exec ls -l &#123;&#125; \;   在当前目录下查找以a开头的文件，且把所有找出来的结果当成参数传给ls -l命令。其余都是固定格式。即将查找到的文件用ls -l再查看一遍</div></pre></td></tr></table></figure>
+<p>find的其它查找方式</p>
+<ul>
+<li>name</li>
+<li>perm 权限</li>
+<li>user  属于某个特定用户的文件</li>
+<li>group</li>
+<li>ctime 基于修改时间查找文件</li>
+<li>type</li>
+<li>size  基于大小查找文件</li>
+</ul>
+<h1 id="vim-编辑器"><a href="#vim-编辑器" class="headerlink" title="vim 编辑器"></a>vim 编辑器</h1><p>vi 是一个命令行界面下的文本编辑工具，1976年开发，1991年基于vi发布了vim，加入了对GUI的支持。</p>
+<p>vim被广泛地作为在文本编辑、文本处理、代码开发等用途。</p>
+<p>Linux中知名的文本编辑器还有emacs，功能更加强大。</p>
+<h2 id="vim的打开"><a href="#vim的打开" class="headerlink" title="vim的打开"></a>vim的打开</h2><p><code>vim</code> 进入vim文本编辑器</p>
+<p>使用vim path/file 来打开文件进行编辑，如果文件存在则打开，不存在则新建。</p>
+<h2 id="vim-的模式"><a href="#vim-的模式" class="headerlink" title="vim 的模式"></a>vim 的模式</h2><h3 id="命令模式-常规模式"><a href="#命令模式-常规模式" class="headerlink" title="命令模式(常规模式)"></a>命令模式(常规模式)</h3><ul>
+<li>任何模式都可以通过<code>esc</code>回到命令模式。</li>
+<li>命令模式执行选择、复制、粘贴、撤销等操作</li>
+</ul>
+<p>命令参数</p>
+<ul>
+<li>u 撤销上一个操作</li>
+<li>i 在光标前插入文本</li>
+<li>o 在当前行的下面插入一个新行</li>
+<li>dd 删除整行</li>
+<li>yy 将当前行的内容放入缓冲区，即复制该行</li>
+<li>n+yy 将n行的内容放入缓冲区(从光标所在行开始计数,+不用写)</li>
+<li>P 粘贴</li>
+<li>r 替换当前字符(先按r键再按需要替换的字符)</li>
+<li>/ 查找关键字<ul>
+<li>在此基础上按n进行光标跳转到匹配到的关键字</li>
+</ul>
+</li>
+</ul>
+<h3 id="插入模式"><a href="#插入模式" class="headerlink" title="插入模式"></a>插入模式</h3><p>在命令模式中按<code>i</code>或者<code>a</code>键就可进入，直接进行文本编辑。</p>
+<h3 id="ex模式"><a href="#ex模式" class="headerlink" title="ex模式"></a>ex模式</h3><p>在命令模式中按<code>:</code>进入ex模式，光标会移动到底部，在这里可以保存修改或退出vim。</p>
+<ul>
+<li>w 保存当前更改</li>
+<li>q 退出</li>
+<li>q! 强制退出不保存</li>
+<li>x 保存并退出，相当于wq</li>
+<li>set number 显示行号</li>
+<li>! 执行一个系统命令并显示结果</li>
+<li>sh 切换到命令行，使用ctrl+d切换回vim</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/生活/冬雪又一年，安否/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1937,177 +2165,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/生活/speed-up-for-many-thing/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Snowman">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/timeaftertime.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Snowman Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/生活/speed-up-for-many-thing/" itemprop="url">speed up for many thing</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-05T23:06:31+08:00">
-                2017-12-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/生活/" itemprop="url" rel="index">
-                    <span itemprop="name">生活</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>快 （ <del>过年</del> ） 放假了，有不少同学寒假要开始准备论文的事情，在此给咱们班的同学推荐几款你办公查资料一定用得上的东西</p>
-<ul>
-<li>翻墙的梯子(最快且免费)</li>
-<li>信息管理插件(随时随地将看到的资料存档)</li>
-<li>pdf转docx、xls等office格式的神器</li>
-</ul>
-<p>开始一一介绍</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/生活/speed-up-for-many-thing/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2164,7 +2221,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2186,7 +2243,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
