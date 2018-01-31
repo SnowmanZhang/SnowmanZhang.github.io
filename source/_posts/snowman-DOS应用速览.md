@@ -11,7 +11,8 @@ categories:
 
 本篇文章仅作忘记参数时查询使用，非实用教程。
 
------
+
+<!--more-->
 
 
 ### cls (clear screen)
