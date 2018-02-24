@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Snowman Home">
 <meta property="og:description" content="一份属于自己的快速查参笔记，这里参考的是Linuxcast的课程。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-31T08:38:45.513Z">
+<meta property="og:updated_time" content="2018-02-11T09:17:45.565Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux-速查笔记">
 <meta name="twitter:description" content="一份属于自己的快速查参笔记，这里参考的是Linuxcast的课程。">
@@ -686,6 +686,424 @@
 <p>每一列以tab键分隔</p>
 </blockquote>
 <p>挂载的设备同样可以以label代替，同样识别有效<br>写法为 <code>LABEL=labelname</code></p>
+<h2 id="获取帮助"><a href="#获取帮助" class="headerlink" title="获取帮助"></a>获取帮助</h2><blockquote>
+<p>你没必要记住所有东西</p>
+<p>几乎所有的命令都可以使用 -h 或 –help参数获取使用方法、参数信息等</p>
+</blockquote>
+<h3 id="man-更详细的使用方式"><a href="#man-更详细的使用方式" class="headerlink" title="man 更详细的使用方式"></a>man 更详细的使用方式</h3><p>man(manual) 是Linux最常用的参数命令。</p>
+<p>man手册有如下类型，可以加入参数来查阅相应的文档。如<code>man number cmd</code></p>
+<ol>
+<li>用户命令</li>
+<li>内核系统调用</li>
+<li>库函数</li>
+<li>特殊文件和设备</li>
+<li>文件格式和规范</li>
+<li>游戏</li>
+<li>规范、标准和其它页面</li>
+<li>系统管理命令</li>
+<li>Linux内核API</li>
+</ol>
+<p><code>man -k keyword</code> 查看包含keyword的文档有哪些</p>
+<h3 id="info-更更详细的手册"><a href="#info-更更详细的手册" class="headerlink" title="info 更更详细的手册"></a>info 更更详细的手册</h3><p>语法与man相同</p>
+<p>man 与 info 都可以通过 “/+关键字”来进行文档搜索，会对标中文字进行反向高亮，按空格翻页</p>
+<h3 id="doc-最详细的手册"><a href="#doc-最详细的手册" class="headerlink" title="doc 最详细的手册"></a>doc 最详细的手册</h3><p>Linux的说明文档保存在 /usr/share/doc 目录中，这些文档是相应程序最为详尽的文档。</p>
+<h2 id="Linux用户"><a href="#Linux用户" class="headerlink" title="Linux用户"></a>Linux用户</h2><p>常识备注：</p>
+<ol>
+<li>每个用户拥有一个userID，操作系统实际使用的是用户ID，而非用户名</li>
+<li>每个用户属于一个主组，属于一个或多个附属组</li>
+<li>每个组拥有一个groupID</li>
+<li>每个进程以一个用户身份运行，并受该用户可访问的资源限制</li>
+<li>每个可登陆用户拥有一个指定的shell</li>
+</ol>
+<h3 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h3><p>用户ID为32位，从0开始，但为了兼容性，限制在60000以下。<br>用户分为以下三种</p>
+<ul>
+<li>root用户(ID为0的用户为root用户)</li>
+<li>系统用户(1~499)(没有shell)<ul>
+<li>每一个进程以一个用户的身份进行，系统用户为一个进程而创建并存在，只为这个进程而使用，故不需要shell</li>
+</ul>
+</li>
+<li>普通用户(500以上)</li>
+</ul>
+<p>使用id 命令可以显示当前用户的信息，也可以<code>id username</code><br>使用passwd命令可以修改当前用户密码</p>
+<h4 id="相关文件"><a href="#相关文件" class="headerlink" title="相关文件"></a>相关文件</h4><ul>
+<li>/etc/passwd 保存用户信息</li>
+<li>/etc/shadow 保存用户密码(加密)</li>
+<li>/etc/group  保存组信息</li>
+</ul>
+<p>passwd内的信息(顺序如下)，每个部分用冒号隔开</p>
+<ul>
+<li>用户名</li>
+<li>密码(x)</li>
+<li>id号</li>
+<li>组id</li>
+<li>用户描述信息</li>
+<li>用户家目录</li>
+<li>用户shell<ul>
+<li>系统用户是 /sbin/nologin</li>
+<li>普通用户是 /bin/bash</li>
+</ul>
+</li>
+</ul>
+<p>shadow 内的文件</p>
+<p>若两个感叹号，则说明是没有设置密码</p>
+<h4 id="查看登陆的用户"><a href="#查看登陆的用户" class="headerlink" title="查看登陆的用户"></a>查看登陆的用户</h4><blockquote>
+<p>一个约定俗成的习惯：命令越长，显示的信息越短</p>
+</blockquote>
+<p>whoami 显示当前用户<br>who     显示有哪些用户在登陆<br>w       显示所有已登陆用户正在干什么</p>
+<h4 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h4><p><code>useradd username</code></p>
+<p>该命令执行以下操作</p>
+<ul>
+<li>在/etc/passwd 中添加用户信息</li>
+<li>如果使用passwd命令创建密码，则将密码加密保存在/etc/shadow中</li>
+<li>为用户建立一个新的家目录，/home/username</li>
+<li>将/etc/skel中的文件复制到用户家目录中，这是一些初始文件</li>
+<li>建立一个与用户用户名相同的组，新建用户默认属于改组</li>
+</ul>
+<p><code>passwd username</code> 创建密码</p>
+<p>useradd的参数</p>
+<ul>
+<li>d 指定家目录</li>
+<li>s 指定登陆shell</li>
+<li>u 指定userid</li>
+<li>g 主族</li>
+<li>G 附属组(最多31个)</li>
+</ul>
+<p>也可以直接修改/etc/passwd实现，但不建议</p>
+<h4 id="修改用户信息"><a href="#修改用户信息" class="headerlink" title="修改用户信息"></a>修改用户信息</h4><p><code>usermod 参数 username</code></p>
+<ul>
+<li>I 新的用户名</li>
+<li>u 新的userid</li>
+<li>d 用户家目录位置</li>
+<li>g 用户所属主组</li>
+<li>G 用户所属附属组</li>
+<li>L 锁定用户使其不能登陆</li>
+<li>U 接触锁定</li>
+</ul>
+<h4 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h4><p><code>userdel username</code> 保留用户家目录<br><code>userdel -r username</code>同时删除用户家目录</p>
+<h3 id="组"><a href="#组" class="headerlink" title="组"></a>组</h3><p>组用于更加方便地管理用户，我们使用部门、职能或地理区域的分类方式来创建使用组</p>
+<ul>
+<li>每个组有一个组ID</li>
+<li>组信息保存在/etc/group中</li>
+<li>每个用户拥有一个主组，同时拥有最多31个附属组</li>
+</ul>
+<h4 id="创建，修改，删除组"><a href="#创建，修改，删除组" class="headerlink" title="创建，修改，删除组"></a>创建，修改，删除组</h4><p><code>groupadd groupname</code> 创建组</p>
+<p><code>groupmod -n newname oldname</code> 修改组名</p>
+<p><code>groupmod -g newGid oldGid</code> 修改组id</p>
+<p><code>groupdel groupname</code> 删除组</p>
+<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><h3 id="权限简介"><a href="#权限简介" class="headerlink" title="权限简介"></a>权限简介</h3><p>Linux中，每个文件拥有三种权限</p>
+<ul>
+<li>r     读取      可读取文件内容     可列出目录内容</li>
+<li>w     写入      可以修改文件内容    可在目录中创建删除文件</li>
+<li>x     执行      可以作为命令执行    可访问目录内容</li>
+</ul>
+<p>对于目录而言，单有r权限是没有意义的，必需有x</p>
+<p>Linux权限基于UGO模式进行控制</p>
+<p>U - user<br>G - group<br>O - other</p>
+<p>命令 <code>ls -l</code>可以查看当前目录下文件的详细信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ls -l 所列示的全部信息(自左向右)</div><div class="line"></div><div class="line">文件类型    U权限     G权限     O权限     链接数量    U:所属用户  G:所属组   大小  时间      文件名</div></pre></td></tr></table></figure>
+<h3 id="修改文件所属用户、组"><a href="#修改文件所属用户、组" class="headerlink" title="修改文件所属用户、组"></a>修改文件所属用户、组</h3><p><strong>chown</strong> 用以改变文件的所属用户：</p>
+<p><code>chown username filename/dirname</code></p>
+<p>-R 参数递归的修改目录下的所有文件的所属用户</p>
+<p><strong>chgrp</strong> 用以改变文件的所属组</p>
+<p><code>chgrp username filename/dirname</code></p>
+<p>-R 参数递归的修改目录下的所有文件的所属组</p>
+<h3 id="chmod-修改文件权限"><a href="#chmod-修改文件权限" class="headerlink" title="chmod 修改文件权限"></a>chmod 修改文件权限</h3><p><strong>第一种方式</strong></p>
+<p><code>chmod 模式 文件</code></p>
+<p>模式如下格式</p>
+<ul>
+<li>u、g、o分别代表用户、组和其它</li>
+<li>a可以代指ugo</li>
+<li>加减号代表加入或删除对应权限</li>
+<li>rwx代表三种权限</li>
+</ul>
+<blockquote>
+<p>eg:<br>chmod u+rw filename<br>chmod go+r filename<br>chmod a-x filename</p>
+</blockquote>
+<p>-R 递归对目录内文件产生效果</p>
+<p><strong>第二种方式</strong></p>
+<p>命令chmod支持以数字方式修改权限，三个权限分别由三个数字表示,421分别代表rwx。</p>
+<p>使用数字表示权限时，每组权限分别为对应数字之和：</p>
+<ul>
+<li>rw = 6</li>
+<li>rwx = 7</li>
+<li>r-x = 5</li>
+</ul>
+<p><code>chmod 660 filename</code></p>
+<h3 id="默认权限"><a href="#默认权限" class="headerlink" title="默认权限"></a>默认权限</h3><p>用户创建新建文件与新建文件夹的权限称为默认权限，默认权限的计算方式为</p>
+<p>新建目录  777 - umask<br>新建文件  666 - umask<br>一般，普通用户的默认umask 是002 ，root用户的默认umask是022</p>
+<p>也就是说，对于普通用户来讲，新建文件的权限是664，新建目录的权限是775</p>
+<blockquote>
+<p>命令umask用以查看设置umask值<br>umask 022</p>
+</blockquote>
+<h3 id="特殊权限"><a href="#特殊权限" class="headerlink" title="特殊权限"></a>特殊权限</h3><ul>
+<li>suid  以文件的所属用户身份执行，而非执行文件的用户  该权限用于执行文件,所属用户的x位被改为了s<ul>
+<li>以passwd命令为例，passwd命令用于将输入信息，写入shadow文件中，普通用户使用passwd命令，则自动使用root身份执行命令。</li>
+</ul>
+</li>
+<li>sgid    对文件：以文件所属组身份执行，对文件夹：若对某个目录加入sgid权限，则在该目录以内的所有新创建文件将自动继承目录的所属组<ul>
+<li>常规来说，当创建了一个文件夹，并赋予了一个所属组A，但在该目录内新建文件，则其所属组并未能继承所属组A</li>
+<li>使用sgid则产生了继承效果</li>
+<li>sgid会显示在所属组的X位上(可执行位)</li>
+</ul>
+</li>
+<li>sticky </li>
+</ul>
+<h4 id="设置特殊权限位"><a href="#设置特殊权限位" class="headerlink" title="设置特殊权限位"></a>设置特殊权限位</h4><p>设置suid:    chmod u+s filename<br>设置sgid:    chmod g+s filename<br>设置sticky:    chmod o+t filename</p>
+<p>与普通权限一样，也可以使用数字方式表示</p>
+<ul>
+<li>SUID = 4</li>
+<li>SGID = 2</li>
+<li>Sticky = 1</li>
+</ul>
+<p>有 <code>chmod 4755 filename</code>  4即为追加数字    </p>
+<blockquote>
+<p>仍需详细理解！</p>
+</blockquote>
+<h2 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h2><blockquote>
+<p>以太网接口被命令为 eth0、eth1…</p>
+<p>通过lspci可以查看网卡硬件信息</p>
+</blockquote>
+<h3 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h3><ul>
+<li>ifconfig -a 查看所有接口</li>
+<li>ifconfig eth0 查看特定接口</li>
+</ul>
+<h3 id="ifup-ifdown-接口号-启用禁用接口"><a href="#ifup-ifdown-接口号-启用禁用接口" class="headerlink" title="ifup|ifdown 接口号   启用禁用接口"></a>ifup|ifdown 接口号   启用禁用接口</h3><h3 id="setup-配置命令"><a href="#setup-配置命令" class="headerlink" title="setup 配置命令"></a>setup 配置命令</h3><p>setup -&gt; network configuartion</p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>网络相关配置文件</p>
+<ul>
+<li>网卡配置文件    <code>/etc/sysconfig/network-scripts/ifcfg-eth0</code><ul>
+<li>该文件可以直接修改相关内容，而不用使用setup命令</li>
+</ul>
+</li>
+<li>DNS配置文件    <code>/etc/resolv.conf</code></li>
+<li>主机名配置文件    <code>/etc/sysconfig/network</code></li>
+<li>静态主机名配置文件 <code>/etc/hosts</code></li>
+</ul>
+<h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p>测试网络通信</p>
+<ul>
+<li><code>ping 193.234.23.13</code></li>
+<li><code>ping snowman.cn</code></li>
+</ul>
+<p>测试DNS </p>
+<ul>
+<li><code>host snowman.cn</code></li>
+<li><code>dig www.baidu.com</code></li>
+</ul>
+<p>显示路由表的相关信息</p>
+<p><code>ip route</code></p>
+<p>追踪到达目标地址的网络路径</p>
+<p><code>traceroute www.baidu.com</code></p>
+<p>使用mtr进行网络质量测试(结合了traceroute 和ping)(my trace route)</p>
+<p><code>mtr www.baidu.com</code></p>
+<h3 id="hostname-查看与修改主机名-实时"><a href="#hostname-查看与修改主机名-实时" class="headerlink" title="hostname 查看与修改主机名(实时)"></a>hostname 查看与修改主机名(实时)</h3><ul>
+<li><code>hostname</code> 查看主机名</li>
+<li><code>hostname newdoaminname</code> 修改新的主机名</li>
+</ul>
+<h3 id="永久性修改主机名"><a href="#永久性修改主机名" class="headerlink" title="永久性修改主机名"></a>永久性修改主机名</h3><p>/etc/sysconfig/network</p>
+<p>HOSTNAME = newdoaminname</p>
+<blockquote>
+<p>问题：一个Linux系统内只能使用一个主机名吗？如果需要装载两个主机如何做。</p>
+<p>经验：事实上，Linux的行内   <code>[root@training ~]</code>中，root是用户名，training是主机名，~是目录，而对于<code>git@187.129.1.1</code>而言，后者是主机名，git是用户。对于邮箱而言亦是。</p>
+</blockquote>
+<h2 id="管道与重定向"><a href="#管道与重定向" class="headerlink" title="管道与重定向"></a>管道与重定向</h2><p>命令行shell数据流有以下定义</p>
+<ul>
+<li>STDIN 标准输入</li>
+<li>STDOUT 标准输出</li>
+<li>STDERR 标准错误</li>
+</ul>
+<p>命令通过STDIN接收参数或数据，通过STDOUT输出结果或通过STDERR输出错误。</p>
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><ul>
+<li><blockquote>
+<p>将标准输出重定向到文件(覆盖)</p>
+</blockquote>
+</li>
+<li><blockquote>
+<blockquote>
+<p>将标准输出重定向到文件(追加)</p>
+</blockquote>
+</blockquote>
+</li>
+<li>2&gt; 将标准错误重定向到文件(覆盖)</li>
+<li>2&gt;&amp;1 将标准输出和标准错误相结合</li>
+<li>&lt; 重定向STDIN</li>
+</ul>
+<h3 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h3><p><code>|</code> 将一个命令的STDOUT作为下一个命令的STDIN，执行之</p>
+<h2 id="Linux文本处理工具"><a href="#Linux文本处理工具" class="headerlink" title="Linux文本处理工具"></a>Linux文本处理工具</h2><ul>
+<li>文件浏览<ul>
+<li>cat     查看文件内容</li>
+<li>more     以翻页形式查看文件内容(只能向下翻页)</li>
+<li>less    以翻页形式查看文件内容(可上下翻页)</li>
+<li>head    查看文件的开始10行(或指定行数)</li>
+<li>tail     查看文件的结束10行(或指定行数)</li>
+</ul>
+</li>
+<li>基于关键字搜索(grep命令用以基于关键字搜索文本)<ul>
+<li>e.g.    grep ‘linuxcast’ /etc/passwd</li>
+<li>e.g.     find / -user linuxcast|grep Video  将根目录下所有用户为linuxcast的目录传输到grep命令下搜索video词</li>
+<li>i     在搜索的时候忽略大小写</li>
+<li>n     显示结果所在行数</li>
+<li>v     输出不带关键字的行</li>
+<li>Ax     在输出的时候包含结果所在行之后的指定行数(x就是数字)</li>
+<li>Bx     在输出的时候包含结果所在行之前的指定行数(x就是数字)</li>
+</ul>
+</li>
+<li>基于列处理文本(cut命令用以基于列处理文本内容)<ul>
+<li>e.g.     cut -d: -f1 /etc/passwd</li>
+<li>e.g.     grep linuxcast /etc/passwd|cut -d: -f3     grep搜索linuxcast的账户信息，cut切割出其第三列，即uid部分输出出来</li>
+<li>d     指定分割字符(默认是TAB)</li>
+<li>f     指定输出的列号</li>
+<li>c     基于字符进行切割(e.g. cut -c2-6 /etc/passwd 只显示第2到第6个字符)</li>
+</ul>
+</li>
+<li>文本统计(wc命令用以统计文本信息)<ul>
+<li>e.g.     wc filename  对文件进行统计 </li>
+<li>l     只统计行数</li>
+<li>w     只统计单词数</li>
+<li>c     只统计字节数</li>
+<li>m     只统计字符数</li>
+</ul>
+</li>
+<li>文本排序(sort命令用以对文本内容进行排序)<ul>
+<li>e.g.     sort filename 对文件进行排序(按每行首字母进行排序)</li>
+<li>r     倒序排序</li>
+<li>n     基于数字进行排序</li>
+<li>f     忽略大小写</li>
+<li>u     删除重复行(uniq命令同样可以删除重复的相邻行)</li>
+<li>t c     使用c作为分隔符分割为列进行排序</li>
+<li>k x     当分割为列进行排序时，指定基于哪个列进行排序</li>
+</ul>
+</li>
+<li>文本比较(diff命令用于比较两个文件的区别)<ul>
+<li>e.g.     diff filename1 filename2</li>
+<li>i     忽略大小写</li>
+<li>b     忽略空格数量的改变</li>
+<li>u     统一显示比较信息(一般用以生成patch文件)(e.g. diff -u filename1 filenam2 &gt; final.patch)</li>
+</ul>
+</li>
+<li>检查拼写<ul>
+<li>e.g.     aspell check filename</li>
+<li>e.g.     aspell list &lt; filename</li>
+</ul>
+</li>
+<li>处理文本内容(tr命令用以进行转换类型的功能)<ul>
+<li>e.g.     tr -d ‘apple’ &lt; linuxcast     删除关键字</li>
+<li>e.g.     tr ‘a-z’’A-Z’ &lt; linuxcast      转换大小写</li>
+</ul>
+</li>
+<li>搜索替换(sed命令用以搜索并替换文本)<ul>
+<li>e.g.     sed ‘s/linux/unix/g’ filename     将linux词换为unix，g表示全部替换</li>
+<li>e.g.     sef ‘1,50s/linux/unix/g’ filename     1到50行进行替换</li>
+</ul>
+</li>
+</ul>
+<h2 id="更加底层：Linux系统启动"><a href="#更加底层：Linux系统启动" class="headerlink" title="更加底层：Linux系统启动"></a>更加底层：Linux系统启动</h2><h3 id="系统启动流程"><a href="#系统启动流程" class="headerlink" title="系统启动流程"></a>系统启动流程</h3><ul>
+<li>BIOS</li>
+<li>MBR：Boot Code</li>
+<li>执行引导程序 GRUB</li>
+<li>加载内核</li>
+<li>执行init</li>
+<li>runlevel</li>
+</ul>
+<h3 id="BIOS"><a href="#BIOS" class="headerlink" title="BIOS"></a>BIOS</h3><p>BIOS(basic input output system) 我们称之为基本输入输出系统，一般保存在主板上的BIOS芯片中。</p>
+<p>BIOS负责检查硬件并且查找可启动设备</p>
+<p>可启动设备在BIOS设置中进行定义，如USB，CDROM，HD</p>
+<h3 id="MBR"><a href="#MBR" class="headerlink" title="MBR"></a>MBR</h3><p>BIOS找到可启动设备后执行其引导代码</p>
+<p>引导代码为硬盘第一个扇区的前446字节，MBR其第一个扇区的最后部分一定是55aa</p>
+<h3 id="GRUB"><a href="#GRUB" class="headerlink" title="GRUB"></a>GRUB</h3><p>Grub是现在Linux使用的主流引导程序，并且可以用来引导现在几乎所有的操作系统</p>
+<p>Grub的相关文件保存在/boot/grub目录中</p>
+<p>MBR因为字节太小，往往执行的内容是寻路到一个更复杂的引导程序，即GRUB</p>
+<p>流程</p>
+<ul>
+<li>stage1 (MBR)</li>
+<li>stage1_5 (驱动、文件系统)</li>
+<li>stage2</li>
+<li>加载内核</li>
+</ul>
+<h3 id="kernel"><a href="#kernel" class="headerlink" title="kernel"></a>kernel</h3><ul>
+<li>MBR的引导代码用于找到并加载Linux内核</li>
+<li>Linux内核保存在/boot/vmlinuz-2.6.32-279.el6.i686</li>
+<li>一般还会加载内核模块打包文件 /boot/initramfs-2.6.32-279.el6.i686.img</li>
+<li>linux将一些不常用的驱动与功能编译成模块，在需要的时候动态加载，而这些模块被打包保存为一个initramfs文件</li>
+</ul>
+<h3 id="init"><a href="#init" class="headerlink" title="init"></a>init</h3><p>init 是Linux系统中运行的第一个进程</p>
+<p>调用/etc/rc.d/rc.sysinit 负责对系统进行初始化、挂载文件系统，并且根据运行级别启动相应服务。</p>
+<p>Linux运行级别</p>
+<ul>
+<li>0 关机</li>
+<li>1 单用户模式</li>
+<li>2 不带网络的多用户模式</li>
+<li>3 多用户模式</li>
+<li>4 未使用</li>
+<li>5 XII图形化模式</li>
+<li>6 重新启动</li>
+</ul>
+<h3 id="单用户修改root密码"><a href="#单用户修改root密码" class="headerlink" title="单用户修改root密码"></a>单用户修改root密码</h3><p>为内核传递参数1或者single可系统进入单用户模式</p>
+<p>单用户模式下不启动任何服务</p>
+<p>单用户模式直接以root用户登陆，并且不需要密码</p>
+<p>再使用passwd修改密码</p>
+<h3 id="rpm包管理"><a href="#rpm包管理" class="headerlink" title="rpm包管理"></a>rpm包管理</h3><p>rpm(redhat package manager)</p>
+<p>rpm通过将源代码基于特定平台系统编译为可执行文件，并保存依赖关系，来简化开源软件的安装管理。</p>
+<p>设计目标如下</p>
+<ul>
+<li>使用简单</li>
+<li>使用单一软件包格式文件发布(.rpm)</li>
+<li>可升级</li>
+<li>追踪软件依赖关系</li>
+<li>基本信息查询</li>
+<li>软件验证功能</li>
+<li>支持多平台</li>
+</ul>
+<h4 id="rpm命令规范"><a href="#rpm命令规范" class="headerlink" title="rpm命令规范"></a>rpm命令规范</h4><p>linuxcast-1.2.0-30.el6.i686.rpm</p>
+<p>软件名+版本号分支号+平台型号+CPU型号.rpm</p>
+<h4 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h4><ul>
+<li>安装软件    rpm -i software.rpm</li>
+<li>卸载软件    rpm -e software</li>
+<li>升级形式安装    rpm -U software-new.rpm</li>
+</ul>
+<p>rpm 支持通过http、ftp协议安装软件</p>
+<p>e.g.     rpm -ivh <a href="http://www.linuxcast.net/software.rpm" target="_blank" rel="external">http://www.linuxcast.net/software.rpm</a></p>
+<ul>
+<li>v     显示相关信息</li>
+<li>h     显示进度条</li>
+</ul>
+<h4 id="rpm查询"><a href="#rpm查询" class="headerlink" title="rpm查询"></a>rpm查询</h4><ul>
+<li>rpm -qa        列出所有已经安装的rpm软件</li>
+<li>rpm -qi SoftwareName    查询一个软件的基本信息</li>
+<li>rpm -ql SoftwareName     查询某个软件有哪些目录</li>
+<li>rpm -qf filename         查询某个文件是哪个软件安装进来的</li>
+<li>rpm -qlp software.rpm 查询一个rpm在安装以后会增加哪些文件目录，p代表未安装的意思</li>
+<li>rpm -V SoftwareName     查询某个软件内的目录，是否存在不应该存在的变化</li>
+<li>rpm –import RPM-GPG-KEY-CentOS-6    导入密钥</li>
+<li>rpm -K SoftwareName.rpm             验证rpm文件</li>
+</ul>
+<h3 id="YUM机制"><a href="#YUM机制" class="headerlink" title="YUM机制"></a>YUM机制</h3><p>YUM(yellowdog updater,Modified)是一个RPM的前端程序，主要目的是设计用来自动解决RPM的依赖关系问题。其特点是</p>
+<ul>
+<li>自动解决依赖关系</li>
+<li>可以对RPM进行分组，并基于组进行安装操作</li>
+<li>引入仓库概念，支持多个仓库</li>
+<li>配置简单</li>
+</ul>
+<p>YUM引入了仓库的概念，仓库用来存放所有现有的rpm软件包</p>
+<p>仓库可以是本地的，也可以通过HTTP、FTP形式使用集中的，统一的网络仓库</p>
+<h4 id="YUM仓库"><a href="#YUM仓库" class="headerlink" title="YUM仓库"></a>YUM仓库</h4><p>配置文件位于 <code>/etc/yum.repos.d/</code>目录下</p>
+<p>格式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[LinuxCast]</div><div class="line">name = ....</div><div class="line">baseurl = ...</div><div class="line">enable = 1</div><div class="line">gpgcheck = 1 (1为启用，0为禁用)</div></pre></td></tr></table></figure>
+<ul>
+<li>仓库可以使用file、http、nfs方式</li>
+<li>yum配置文件必须以.repo结尾</li>
+<li>一个配置文件内可以保存多个仓库的配置信息</li>
+<li>/etc/yum.repos.d/ 目录下可以存在多个配置文件</li>
+</ul>
+<h4 id="YUM基本命令"><a href="#YUM基本命令" class="headerlink" title="YUM基本命令"></a>YUM基本命令</h4><ul>
+<li>yum install SoftwareName</li>
+<li>yum remove SoftwareName</li>
+<li>yum update SoftwareName</li>
+</ul>
+<p>yum本质上是对rpm包的管理机制，因此安装也是安装rpm包</p>
+<h4 id="YUM-查询"><a href="#YUM-查询" class="headerlink" title="YUM 查询"></a>YUM 查询</h4><ul>
+<li>yum search keyword     搜索</li>
+<li>yum list (all | installed | recent | updates)  列出所有仓库中已有的软件，已安装的软件，最近的，软件更新的</li>
+<li>yum info tigervnc        同rpm -qi tigervnc</li>
+</ul>
 
       
     </div>
@@ -727,6 +1145,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/编程/Django-迅速搭建一个小程序服务/" rel="prev" title="Django-迅速搭建一个小程序服务">
+                Django-迅速搭建一个小程序服务 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -804,7 +1226,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -826,7 +1248,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -861,7 +1283,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#日期时间"><span class="nav-number">1.</span> <span class="nav-text">日期时间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#date-查看操作系统时间"><span class="nav-number">1.1.</span> <span class="nav-text">date    查看操作系统时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hwclock-clock-查看硬件时钟时间"><span class="nav-number">1.2.</span> <span class="nav-text">hwclock(clock)     查看硬件时钟时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cal-查看日历"><span class="nav-number">1.3.</span> <span class="nav-text">cal 查看日历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uptime-查看当前系统的运行时间"><span class="nav-number">1.4.</span> <span class="nav-text">uptime 查看当前系统的运行时间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出查看命令"><span class="nav-number">2.</span> <span class="nav-text">输出查看命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#echo-显示输入的内容"><span class="nav-number">2.1.</span> <span class="nav-text">echo 显示输入的内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cat-用以显示文件内容"><span class="nav-number">2.2.</span> <span class="nav-text">cat 用以显示文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#head-用以显示文件的头几行-默认10行"><span class="nav-number">2.3.</span> <span class="nav-text">head 用以显示文件的头几行(默认10行)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail-用以显示文件的末尾几行-默认10行"><span class="nav-number">2.4.</span> <span class="nav-text">tail 用以显示文件的末尾几行(默认10行)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#more-用于翻页显示文件内容-只能向下翻页"><span class="nav-number">2.5.</span> <span class="nav-text">more 用于翻页显示文件内容(只能向下翻页)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#less-用于翻页显示文件内容-带上下翻页"><span class="nav-number">2.6.</span> <span class="nav-text">less 用于翻页显示文件内容(带上下翻页)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看硬件信息"><span class="nav-number">3.</span> <span class="nav-text">查看硬件信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lspci用以查看PCI类型的设备，如声卡网卡等等"><span class="nav-number">3.1.</span> <span class="nav-text">lspci用以查看PCI类型的设备，如声卡网卡等等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsusb用以查看USB设备"><span class="nav-number">3.2.</span> <span class="nav-text">lsusb用以查看USB设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsmod用以查看加载的模块-驱动"><span class="nav-number">3.3.</span> <span class="nav-text">lsmod用以查看加载的模块(驱动)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关机与重启"><span class="nav-number">4.</span> <span class="nav-text">关机与重启</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shutdown"><span class="nav-number">4.1.</span> <span class="nav-text">shutdown</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归档与压缩"><span class="nav-number">5.</span> <span class="nav-text">归档与压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zip-用以压缩文件"><span class="nav-number">5.1.</span> <span class="nav-text">zip 用以压缩文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unzip-解压缩文件"><span class="nav-number">5.2.</span> <span class="nav-text">unzip 解压缩文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gzip-压缩文件"><span class="nav-number">5.3.</span> <span class="nav-text">gzip 压缩文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tar-用以归档文件，打包命令"><span class="nav-number">5.4.</span> <span class="nav-text">tar 用以归档文件，打包命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找"><span class="nav-number">6.</span> <span class="nav-text">查找</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#locate-用以快速查找文件，文件夹"><span class="nav-number">6.1.</span> <span class="nav-text">locate 用以快速查找文件，文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find-用以高级查找文件与文件夹"><span class="nav-number">6.2.</span> <span class="nav-text">find 用以高级查找文件与文件夹</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vim-编辑器"><span class="nav-number"></span> <span class="nav-text">vim 编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim的打开"><span class="nav-number">1.</span> <span class="nav-text">vim的打开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim-的模式"><span class="nav-number">2.</span> <span class="nav-text">vim 的模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#命令模式-常规模式"><span class="nav-number">2.1.</span> <span class="nav-text">命令模式(常规模式)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入模式"><span class="nav-number">2.2.</span> <span class="nav-text">插入模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ex模式"><span class="nav-number">2.3.</span> <span class="nav-text">ex模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘"><span class="nav-number">3.</span> <span class="nav-text">磁盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MBR分区"><span class="nav-number">3.1.</span> <span class="nav-text">MBR分区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主分区、扩展分区、逻辑分区"><span class="nav-number">3.1.1.</span> <span class="nav-text">主分区、扩展分区、逻辑分区</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPT分区"><span class="nav-number">3.2.</span> <span class="nav-text">GPT分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fdisk磁盘管理"><span class="nav-number">3.3.</span> <span class="nav-text">fdisk磁盘管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fdisk参数"><span class="nav-number">3.3.1.</span> <span class="nav-text">fdisk参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证"><span class="nav-number">3.3.2.</span> <span class="nav-text">验证</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件管理系统"><span class="nav-number">4.</span> <span class="nav-text">文件管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MKE2FS-命令"><span class="nav-number">4.1.</span> <span class="nav-text">MKE2FS 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MKFS-命令"><span class="nav-number">4.2.</span> <span class="nav-text">MKFS 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DUMPE2FS-命令"><span class="nav-number">4.3.</span> <span class="nav-text">DUMPE2FS 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#journal-文件系统日志"><span class="nav-number">4.4.</span> <span class="nav-text">journal 文件系统日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#E2LABEL"><span class="nav-number">4.5.</span> <span class="nav-text">E2LABEL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FSCK"><span class="nav-number">4.6.</span> <span class="nav-text">FSCK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂在、使用文件系统"><span class="nav-number">4.7.</span> <span class="nav-text">挂在、使用文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mount"><span class="nav-number">4.7.1.</span> <span class="nav-text">mount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#umount"><span class="nav-number">4.7.2.</span> <span class="nav-text">umount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动挂载"><span class="nav-number">4.7.3.</span> <span class="nav-text">自动挂载</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#日期时间"><span class="nav-number">1.</span> <span class="nav-text">日期时间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#date-查看操作系统时间"><span class="nav-number">1.1.</span> <span class="nav-text">date    查看操作系统时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hwclock-clock-查看硬件时钟时间"><span class="nav-number">1.2.</span> <span class="nav-text">hwclock(clock)     查看硬件时钟时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cal-查看日历"><span class="nav-number">1.3.</span> <span class="nav-text">cal 查看日历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uptime-查看当前系统的运行时间"><span class="nav-number">1.4.</span> <span class="nav-text">uptime 查看当前系统的运行时间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出查看命令"><span class="nav-number">2.</span> <span class="nav-text">输出查看命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#echo-显示输入的内容"><span class="nav-number">2.1.</span> <span class="nav-text">echo 显示输入的内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cat-用以显示文件内容"><span class="nav-number">2.2.</span> <span class="nav-text">cat 用以显示文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#head-用以显示文件的头几行-默认10行"><span class="nav-number">2.3.</span> <span class="nav-text">head 用以显示文件的头几行(默认10行)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail-用以显示文件的末尾几行-默认10行"><span class="nav-number">2.4.</span> <span class="nav-text">tail 用以显示文件的末尾几行(默认10行)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#more-用于翻页显示文件内容-只能向下翻页"><span class="nav-number">2.5.</span> <span class="nav-text">more 用于翻页显示文件内容(只能向下翻页)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#less-用于翻页显示文件内容-带上下翻页"><span class="nav-number">2.6.</span> <span class="nav-text">less 用于翻页显示文件内容(带上下翻页)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看硬件信息"><span class="nav-number">3.</span> <span class="nav-text">查看硬件信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lspci用以查看PCI类型的设备，如声卡网卡等等"><span class="nav-number">3.1.</span> <span class="nav-text">lspci用以查看PCI类型的设备，如声卡网卡等等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsusb用以查看USB设备"><span class="nav-number">3.2.</span> <span class="nav-text">lsusb用以查看USB设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsmod用以查看加载的模块-驱动"><span class="nav-number">3.3.</span> <span class="nav-text">lsmod用以查看加载的模块(驱动)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关机与重启"><span class="nav-number">4.</span> <span class="nav-text">关机与重启</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shutdown"><span class="nav-number">4.1.</span> <span class="nav-text">shutdown</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归档与压缩"><span class="nav-number">5.</span> <span class="nav-text">归档与压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zip-用以压缩文件"><span class="nav-number">5.1.</span> <span class="nav-text">zip 用以压缩文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unzip-解压缩文件"><span class="nav-number">5.2.</span> <span class="nav-text">unzip 解压缩文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gzip-压缩文件"><span class="nav-number">5.3.</span> <span class="nav-text">gzip 压缩文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tar-用以归档文件，打包命令"><span class="nav-number">5.4.</span> <span class="nav-text">tar 用以归档文件，打包命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找"><span class="nav-number">6.</span> <span class="nav-text">查找</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#locate-用以快速查找文件，文件夹"><span class="nav-number">6.1.</span> <span class="nav-text">locate 用以快速查找文件，文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find-用以高级查找文件与文件夹"><span class="nav-number">6.2.</span> <span class="nav-text">find 用以高级查找文件与文件夹</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vim-编辑器"><span class="nav-number"></span> <span class="nav-text">vim 编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim的打开"><span class="nav-number">1.</span> <span class="nav-text">vim的打开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim-的模式"><span class="nav-number">2.</span> <span class="nav-text">vim 的模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#命令模式-常规模式"><span class="nav-number">2.1.</span> <span class="nav-text">命令模式(常规模式)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入模式"><span class="nav-number">2.2.</span> <span class="nav-text">插入模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ex模式"><span class="nav-number">2.3.</span> <span class="nav-text">ex模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘"><span class="nav-number">3.</span> <span class="nav-text">磁盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MBR分区"><span class="nav-number">3.1.</span> <span class="nav-text">MBR分区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主分区、扩展分区、逻辑分区"><span class="nav-number">3.1.1.</span> <span class="nav-text">主分区、扩展分区、逻辑分区</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPT分区"><span class="nav-number">3.2.</span> <span class="nav-text">GPT分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fdisk磁盘管理"><span class="nav-number">3.3.</span> <span class="nav-text">fdisk磁盘管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fdisk参数"><span class="nav-number">3.3.1.</span> <span class="nav-text">fdisk参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证"><span class="nav-number">3.3.2.</span> <span class="nav-text">验证</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件管理系统"><span class="nav-number">4.</span> <span class="nav-text">文件管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MKE2FS-命令"><span class="nav-number">4.1.</span> <span class="nav-text">MKE2FS 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MKFS-命令"><span class="nav-number">4.2.</span> <span class="nav-text">MKFS 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DUMPE2FS-命令"><span class="nav-number">4.3.</span> <span class="nav-text">DUMPE2FS 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#journal-文件系统日志"><span class="nav-number">4.4.</span> <span class="nav-text">journal 文件系统日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#E2LABEL"><span class="nav-number">4.5.</span> <span class="nav-text">E2LABEL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FSCK"><span class="nav-number">4.6.</span> <span class="nav-text">FSCK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂在、使用文件系统"><span class="nav-number">4.7.</span> <span class="nav-text">挂在、使用文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mount"><span class="nav-number">4.7.1.</span> <span class="nav-text">mount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#umount"><span class="nav-number">4.7.2.</span> <span class="nav-text">umount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动挂载"><span class="nav-number">4.7.3.</span> <span class="nav-text">自动挂载</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取帮助"><span class="nav-number">5.</span> <span class="nav-text">获取帮助</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#man-更详细的使用方式"><span class="nav-number">5.1.</span> <span class="nav-text">man 更详细的使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#info-更更详细的手册"><span class="nav-number">5.2.</span> <span class="nav-text">info 更更详细的手册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#doc-最详细的手册"><span class="nav-number">5.3.</span> <span class="nav-text">doc 最详细的手册</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux用户"><span class="nav-number">6.</span> <span class="nav-text">Linux用户</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户"><span class="nav-number">6.1.</span> <span class="nav-text">用户</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#相关文件"><span class="nav-number">6.1.1.</span> <span class="nav-text">相关文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看登陆的用户"><span class="nav-number">6.1.2.</span> <span class="nav-text">查看登陆的用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建用户"><span class="nav-number">6.1.3.</span> <span class="nav-text">创建用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改用户信息"><span class="nav-number">6.1.4.</span> <span class="nav-text">修改用户信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除用户"><span class="nav-number">6.1.5.</span> <span class="nav-text">删除用户</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组"><span class="nav-number">6.2.</span> <span class="nav-text">组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建，修改，删除组"><span class="nav-number">6.2.1.</span> <span class="nav-text">创建，修改，删除组</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#权限"><span class="nav-number">7.</span> <span class="nav-text">权限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#权限简介"><span class="nav-number">7.1.</span> <span class="nav-text">权限简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改文件所属用户、组"><span class="nav-number">7.2.</span> <span class="nav-text">修改文件所属用户、组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chmod-修改文件权限"><span class="nav-number">7.3.</span> <span class="nav-text">chmod 修改文件权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#默认权限"><span class="nav-number">7.4.</span> <span class="nav-text">默认权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊权限"><span class="nav-number">7.5.</span> <span class="nav-text">特殊权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置特殊权限位"><span class="nav-number">7.5.1.</span> <span class="nav-text">设置特殊权限位</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络基础"><span class="nav-number">8.</span> <span class="nav-text">网络基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ifconfig"><span class="nav-number">8.1.</span> <span class="nav-text">ifconfig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ifup-ifdown-接口号-启用禁用接口"><span class="nav-number">8.2.</span> <span class="nav-text">ifup|ifdown 接口号   启用禁用接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setup-配置命令"><span class="nav-number">8.3.</span> <span class="nav-text">setup 配置命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">8.4.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping"><span class="nav-number">8.5.</span> <span class="nav-text">ping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hostname-查看与修改主机名-实时"><span class="nav-number">8.6.</span> <span class="nav-text">hostname 查看与修改主机名(实时)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#永久性修改主机名"><span class="nav-number">8.7.</span> <span class="nav-text">永久性修改主机名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道与重定向"><span class="nav-number">9.</span> <span class="nav-text">管道与重定向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重定向"><span class="nav-number">9.1.</span> <span class="nav-text">重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管道"><span class="nav-number">9.2.</span> <span class="nav-text">管道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux文本处理工具"><span class="nav-number">10.</span> <span class="nav-text">Linux文本处理工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更加底层：Linux系统启动"><span class="nav-number">11.</span> <span class="nav-text">更加底层：Linux系统启动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统启动流程"><span class="nav-number">11.1.</span> <span class="nav-text">系统启动流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIOS"><span class="nav-number">11.2.</span> <span class="nav-text">BIOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MBR"><span class="nav-number">11.3.</span> <span class="nav-text">MBR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GRUB"><span class="nav-number">11.4.</span> <span class="nav-text">GRUB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kernel"><span class="nav-number">11.5.</span> <span class="nav-text">kernel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#init"><span class="nav-number">11.6.</span> <span class="nav-text">init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单用户修改root密码"><span class="nav-number">11.7.</span> <span class="nav-text">单用户修改root密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rpm包管理"><span class="nav-number">11.8.</span> <span class="nav-text">rpm包管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#rpm命令规范"><span class="nav-number">11.8.1.</span> <span class="nav-text">rpm命令规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本命令"><span class="nav-number">11.8.2.</span> <span class="nav-text">基本命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rpm查询"><span class="nav-number">11.8.3.</span> <span class="nav-text">rpm查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YUM机制"><span class="nav-number">11.9.</span> <span class="nav-text">YUM机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#YUM仓库"><span class="nav-number">11.9.1.</span> <span class="nav-text">YUM仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#YUM基本命令"><span class="nav-number">11.9.2.</span> <span class="nav-text">YUM基本命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#YUM-查询"><span class="nav-number">11.9.3.</span> <span class="nav-text">YUM 查询</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
