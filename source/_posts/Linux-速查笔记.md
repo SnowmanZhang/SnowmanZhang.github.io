@@ -416,3 +416,581 @@ windows和Mac是自动挂载，linux需要手动挂载到/mnt下，
 挂载的设备同样可以以label代替，同样识别有效
 写法为 `LABEL=labelname`
 
+## 获取帮助
+
+>你没必要记住所有东西
+
+>几乎所有的命令都可以使用 -h 或 --help参数获取使用方法、参数信息等
+
+### man 更详细的使用方式
+
+man(manual) 是Linux最常用的参数命令。
+
+man手册有如下类型，可以加入参数来查阅相应的文档。如`man number cmd`
+
+1. 用户命令
+2. 内核系统调用
+3. 库函数
+4. 特殊文件和设备
+5. 文件格式和规范
+6. 游戏
+7. 规范、标准和其它页面
+8. 系统管理命令
+9. Linux内核API
+
+`man -k keyword` 查看包含keyword的文档有哪些
+
+### info 更更详细的手册
+
+语法与man相同
+
+man 与 info 都可以通过 "/+关键字"来进行文档搜索，会对标中文字进行反向高亮，按空格翻页
+
+
+### doc 最详细的手册
+
+Linux的说明文档保存在 /usr/share/doc 目录中，这些文档是相应程序最为详尽的文档。
+
+## Linux用户
+
+常识备注：
+
+1. 每个用户拥有一个userID，操作系统实际使用的是用户ID，而非用户名
+2. 每个用户属于一个主组，属于一个或多个附属组
+3. 每个组拥有一个groupID
+4. 每个进程以一个用户身份运行，并受该用户可访问的资源限制
+5. 每个可登陆用户拥有一个指定的shell
+
+### 用户
+
+用户ID为32位，从0开始，但为了兼容性，限制在60000以下。
+用户分为以下三种
+
+- root用户(ID为0的用户为root用户)
+- 系统用户(1~499)(没有shell)
+    - 每一个进程以一个用户的身份进行，系统用户为一个进程而创建并存在，只为这个进程而使用，故不需要shell
+- 普通用户(500以上)
+
+使用id 命令可以显示当前用户的信息，也可以`id username`
+使用passwd命令可以修改当前用户密码
+
+#### 相关文件
+
+- /etc/passwd 保存用户信息
+- /etc/shadow 保存用户密码(加密)
+- /etc/group  保存组信息
+
+passwd内的信息(顺序如下)，每个部分用冒号隔开
+
+- 用户名
+- 密码(x)
+- id号
+- 组id
+- 用户描述信息
+- 用户家目录
+- 用户shell
+    - 系统用户是 /sbin/nologin
+    - 普通用户是 /bin/bash
+
+shadow 内的文件
+
+若两个感叹号，则说明是没有设置密码
+
+#### 查看登陆的用户
+
+>一个约定俗成的习惯：命令越长，显示的信息越短
+
+whoami 显示当前用户
+who     显示有哪些用户在登陆
+w       显示所有已登陆用户正在干什么
+
+#### 创建用户
+
+`useradd username`
+
+该命令执行以下操作
+
+- 在/etc/passwd 中添加用户信息
+- 如果使用passwd命令创建密码，则将密码加密保存在/etc/shadow中
+- 为用户建立一个新的家目录，/home/username
+- 将/etc/skel中的文件复制到用户家目录中，这是一些初始文件
+- 建立一个与用户用户名相同的组，新建用户默认属于改组
+
+`passwd username` 创建密码
+
+useradd的参数
+
+- d 指定家目录
+- s 指定登陆shell
+- u 指定userid
+- g 主族
+- G 附属组(最多31个)
+
+也可以直接修改/etc/passwd实现，但不建议
+
+#### 修改用户信息
+
+`usermod 参数 username`
+
+- I 新的用户名
+- u 新的userid
+- d 用户家目录位置
+- g 用户所属主组
+- G 用户所属附属组
+- L 锁定用户使其不能登陆
+- U 接触锁定
+
+#### 删除用户
+
+`userdel username` 保留用户家目录
+`userdel -r username`同时删除用户家目录
+
+### 组
+
+组用于更加方便地管理用户，我们使用部门、职能或地理区域的分类方式来创建使用组
+
+- 每个组有一个组ID
+- 组信息保存在/etc/group中
+- 每个用户拥有一个主组，同时拥有最多31个附属组
+
+#### 创建，修改，删除组
+
+`groupadd groupname` 创建组
+
+`groupmod -n newname oldname` 修改组名
+
+`groupmod -g newGid oldGid` 修改组id
+
+`groupdel groupname` 删除组
+
+## 权限
+
+### 权限简介
+
+Linux中，每个文件拥有三种权限
+
+- r     读取      可读取文件内容     可列出目录内容
+- w     写入      可以修改文件内容    可在目录中创建删除文件
+- x     执行      可以作为命令执行    可访问目录内容
+
+对于目录而言，单有r权限是没有意义的，必需有x
+
+Linux权限基于UGO模式进行控制
+
+U - user
+G - group
+O - other
+
+命令 `ls -l`可以查看当前目录下文件的详细信息
+
+
+```
+ls -l 所列示的全部信息(自左向右)
+
+文件类型    U权限     G权限     O权限     链接数量    U:所属用户  G:所属组   大小  时间      文件名
+
+```
+
+### 修改文件所属用户、组
+
+**chown** 用以改变文件的所属用户：
+
+`chown username filename/dirname`
+
+-R 参数递归的修改目录下的所有文件的所属用户
+
+**chgrp** 用以改变文件的所属组
+
+`chgrp username filename/dirname`
+
+-R 参数递归的修改目录下的所有文件的所属组
+
+### chmod 修改文件权限
+
+**第一种方式**
+
+`chmod 模式 文件`
+
+模式如下格式
+
+- u、g、o分别代表用户、组和其它
+- a可以代指ugo
+- 加减号代表加入或删除对应权限
+- rwx代表三种权限
+
+> eg: 
+> chmod u+rw filename
+> chmod go+r filename
+> chmod a-x filename
+
+-R 递归对目录内文件产生效果
+
+**第二种方式**
+
+命令chmod支持以数字方式修改权限，三个权限分别由三个数字表示,421分别代表rwx。
+
+使用数字表示权限时，每组权限分别为对应数字之和：
+
+- rw = 6
+- rwx = 7
+- r-x = 5
+
+`chmod 660 filename`
+
+### 默认权限
+
+用户创建新建文件与新建文件夹的权限称为默认权限，默认权限的计算方式为
+
+新建目录  777 - umask
+新建文件  666 - umask
+一般，普通用户的默认umask 是002 ，root用户的默认umask是022
+
+也就是说，对于普通用户来讲，新建文件的权限是664，新建目录的权限是775
+
+>命令umask用以查看设置umask值
+> umask 022
+
+
+### 特殊权限
+
+- suid  以文件的所属用户身份执行，而非执行文件的用户  该权限用于执行文件,所属用户的x位被改为了s
+	- 以passwd命令为例，passwd命令用于将输入信息，写入shadow文件中，普通用户使用passwd命令，则自动使用root身份执行命令。
+- sgid	对文件：以文件所属组身份执行，对文件夹：若对某个目录加入sgid权限，则在该目录以内的所有新创建文件将自动继承目录的所属组
+	- 常规来说，当创建了一个文件夹，并赋予了一个所属组A，但在该目录内新建文件，则其所属组并未能继承所属组A
+	- 使用sgid则产生了继承效果
+	- sgid会显示在所属组的X位上(可执行位)
+- sticky 
+
+#### 设置特殊权限位
+
+设置suid:	chmod u+s filename
+设置sgid:	chmod g+s filename
+设置sticky:	chmod o+t filename
+
+与普通权限一样，也可以使用数字方式表示
+
+- SUID = 4
+- SGID = 2
+- Sticky = 1
+
+有 `	chmod 4755 filename`  4即为追加数字	
+
+> 仍需详细理解！
+
+## 网络基础
+
+> 以太网接口被命令为 eth0、eth1...
+
+> 通过lspci可以查看网卡硬件信息
+
+### ifconfig
+
+- ifconfig -a 查看所有接口
+- ifconfig eth0 查看特定接口
+
+### ifup|ifdown 接口号   启用禁用接口
+
+### setup 配置命令
+
+setup -> network configuartion
+
+
+### 说明
+
+网络相关配置文件
+
+- 网卡配置文件	`/etc/sysconfig/network-scripts/ifcfg-eth0`
+	- 该文件可以直接修改相关内容，而不用使用setup命令
+- DNS配置文件	`/etc/resolv.conf`
+- 主机名配置文件	`/etc/sysconfig/network`
+- 静态主机名配置文件 `/etc/hosts`
+
+
+### ping
+
+测试网络通信
+
+- `ping 193.234.23.13`
+- `ping snowman.cn`
+
+测试DNS 
+
+- `host snowman.cn`
+- `dig www.baidu.com`
+
+显示路由表的相关信息
+
+`ip route`
+
+
+追踪到达目标地址的网络路径
+
+`traceroute www.baidu.com`
+
+使用mtr进行网络质量测试(结合了traceroute 和ping)(my trace route)
+
+`mtr www.baidu.com`
+
+### hostname 查看与修改主机名(实时)
+
+- `hostname` 查看主机名
+- `hostname newdoaminname` 修改新的主机名
+
+### 永久性修改主机名
+
+/etc/sysconfig/network
+
+HOSTNAME = newdoaminname
+
+> 问题：一个Linux系统内只能使用一个主机名吗？如果需要装载两个主机如何做。
+
+> 经验：事实上，Linux的行内   `[root@training ~]`中，root是用户名，training是主机名，~是目录，而对于`git@187.129.1.1`而言，后者是主机名，git是用户。对于邮箱而言亦是。
+
+
+## 管道与重定向
+
+命令行shell数据流有以下定义
+
+- STDIN 标准输入
+- STDOUT 标准输出
+- STDERR 标准错误
+
+命令通过STDIN接收参数或数据，通过STDOUT输出结果或通过STDERR输出错误。
+
+### 重定向
+
+- > 将标准输出重定向到文件(覆盖)
+- >> 将标准输出重定向到文件(追加)
+- 2> 将标准错误重定向到文件(覆盖)
+- 2>&1 将标准输出和标准错误相结合
+- < 重定向STDIN
+
+### 管道
+
+`|` 将一个命令的STDOUT作为下一个命令的STDIN，执行之
+
+
+## Linux文本处理工具
+
+- 文件浏览
+	- cat 	查看文件内容
+	- more 	以翻页形式查看文件内容(只能向下翻页)
+	- less	以翻页形式查看文件内容(可上下翻页)
+	- head	查看文件的开始10行(或指定行数)
+	- tail 	查看文件的结束10行(或指定行数)
+- 基于关键字搜索(grep命令用以基于关键字搜索文本)
+	- e.g.	grep 'linuxcast' /etc/passwd
+	- e.g. 	find / -user linuxcast|grep Video  将根目录下所有用户为linuxcast的目录传输到grep命令下搜索video词
+	- i 	在搜索的时候忽略大小写
+	- n 	显示结果所在行数
+	- v 	输出不带关键字的行
+	- Ax 	在输出的时候包含结果所在行之后的指定行数(x就是数字)
+	- Bx 	在输出的时候包含结果所在行之前的指定行数(x就是数字)
+- 基于列处理文本(cut命令用以基于列处理文本内容)
+	- e.g. 	cut -d: -f1 /etc/passwd
+	- e.g. 	grep linuxcast /etc/passwd|cut -d: -f3 	grep搜索linuxcast的账户信息，cut切割出其第三列，即uid部分输出出来
+	- d 	指定分割字符(默认是TAB)
+	- f 	指定输出的列号
+	- c 	基于字符进行切割(e.g. cut -c2-6 /etc/passwd 只显示第2到第6个字符)
+- 文本统计(wc命令用以统计文本信息)
+	- e.g. 	wc filename  对文件进行统计 
+	- l 	只统计行数
+	- w 	只统计单词数
+	- c 	只统计字节数
+	- m 	只统计字符数
+- 文本排序(sort命令用以对文本内容进行排序)
+	- e.g. 	sort filename 对文件进行排序(按每行首字母进行排序)
+	- r 	倒序排序
+	- n 	基于数字进行排序
+	- f 	忽略大小写
+	- u 	删除重复行(uniq命令同样可以删除重复的相邻行)
+	- t c 	使用c作为分隔符分割为列进行排序
+	- k x 	当分割为列进行排序时，指定基于哪个列进行排序
+- 文本比较(diff命令用于比较两个文件的区别)
+	- e.g. 	diff filename1 filename2
+	- i 	忽略大小写
+	- b 	忽略空格数量的改变
+	- u 	统一显示比较信息(一般用以生成patch文件)(e.g. diff -u filename1 filenam2 > final.patch)
+- 检查拼写
+	- e.g. 	aspell check filename
+	- e.g. 	aspell list < filename
+- 处理文本内容(tr命令用以进行转换类型的功能)
+	- e.g. 	tr -d 'apple' < linuxcast 	删除关键字
+	- e.g. 	tr 'a-z''A-Z' < linuxcast  	转换大小写
+- 搜索替换(sed命令用以搜索并替换文本)
+	- e.g. 	sed 's/linux/unix/g' filename 	将linux词换为unix，g表示全部替换
+	- e.g. 	sef '1,50s/linux/unix/g' filename 	1到50行进行替换
+
+
+## 更加底层：Linux系统启动
+
+### 系统启动流程
+
+- BIOS
+- MBR：Boot Code
+- 执行引导程序 GRUB
+- 加载内核
+- 执行init
+- runlevel
+
+### BIOS
+
+BIOS(basic input output system) 我们称之为基本输入输出系统，一般保存在主板上的BIOS芯片中。
+
+BIOS负责检查硬件并且查找可启动设备
+
+可启动设备在BIOS设置中进行定义，如USB，CDROM，HD
+
+### MBR
+
+BIOS找到可启动设备后执行其引导代码
+
+引导代码为硬盘第一个扇区的前446字节，MBR其第一个扇区的最后部分一定是55aa
+
+### GRUB
+
+Grub是现在Linux使用的主流引导程序，并且可以用来引导现在几乎所有的操作系统
+
+Grub的相关文件保存在/boot/grub目录中
+
+MBR因为字节太小，往往执行的内容是寻路到一个更复杂的引导程序，即GRUB
+
+流程
+
+- stage1 (MBR)
+- stage1_5 (驱动、文件系统)
+- stage2
+- 加载内核
+
+### kernel
+
+- MBR的引导代码用于找到并加载Linux内核
+- Linux内核保存在/boot/vmlinuz-2.6.32-279.el6.i686
+- 一般还会加载内核模块打包文件 /boot/initramfs-2.6.32-279.el6.i686.img
+- linux将一些不常用的驱动与功能编译成模块，在需要的时候动态加载，而这些模块被打包保存为一个initramfs文件
+
+### init
+
+init 是Linux系统中运行的第一个进程
+
+调用/etc/rc.d/rc.sysinit 负责对系统进行初始化、挂载文件系统，并且根据运行级别启动相应服务。
+
+
+Linux运行级别
+
+- 0 关机
+- 1 单用户模式
+- 2 不带网络的多用户模式
+- 3 多用户模式
+- 4 未使用
+- 5 XII图形化模式
+- 6 重新启动
+
+### 单用户修改root密码
+
+为内核传递参数1或者single可系统进入单用户模式
+
+单用户模式下不启动任何服务
+
+单用户模式直接以root用户登陆，并且不需要密码
+
+再使用passwd修改密码
+
+### rpm包管理
+
+rpm(redhat package manager)
+
+rpm通过将源代码基于特定平台系统编译为可执行文件，并保存依赖关系，来简化开源软件的安装管理。
+
+设计目标如下
+
+- 使用简单
+- 使用单一软件包格式文件发布(.rpm)
+- 可升级
+- 追踪软件依赖关系
+- 基本信息查询
+- 软件验证功能
+- 支持多平台
+
+#### rpm命令规范
+
+linuxcast-1.2.0-30.el6.i686.rpm
+
+软件名+版本号分支号+平台型号+CPU型号.rpm
+
+#### 基本命令
+
+- 安装软件	rpm -i software.rpm
+- 卸载软件	rpm -e software
+- 升级形式安装	rpm -U software-new.rpm
+
+rpm 支持通过http、ftp协议安装软件
+
+e.g. 	rpm -ivh http://www.linuxcast.net/software.rpm
+
+- v 	显示相关信息
+- h 	显示进度条
+
+#### rpm查询
+
+- rpm -qa		列出所有已经安装的rpm软件
+- rpm -qi SoftwareName	查询一个软件的基本信息
+- rpm -ql SoftwareName 	查询某个软件有哪些目录
+- rpm -qf filename 		查询某个文件是哪个软件安装进来的
+- rpm -qlp software.rpm 查询一个rpm在安装以后会增加哪些文件目录，p代表未安装的意思
+- rpm -V SoftwareName 	查询某个软件内的目录，是否存在不应该存在的变化
+- rpm --import RPM-GPG-KEY-CentOS-6	导入密钥
+- rpm -K SoftwareName.rpm 			验证rpm文件
+
+### YUM机制
+
+YUM(yellowdog updater,Modified)是一个RPM的前端程序，主要目的是设计用来自动解决RPM的依赖关系问题。其特点是
+
+- 自动解决依赖关系
+- 可以对RPM进行分组，并基于组进行安装操作
+- 引入仓库概念，支持多个仓库
+- 配置简单
+
+YUM引入了仓库的概念，仓库用来存放所有现有的rpm软件包
+
+仓库可以是本地的，也可以通过HTTP、FTP形式使用集中的，统一的网络仓库
+
+#### YUM仓库
+
+配置文件位于 `/etc/yum.repos.d/`目录下
+
+格式如下
+
+```
+[LinuxCast]
+name = ....
+baseurl = ...
+enable = 1
+gpgcheck = 1 (1为启用，0为禁用)
+
+```
+
+- 仓库可以使用file、http、nfs方式
+- yum配置文件必须以.repo结尾
+- 一个配置文件内可以保存多个仓库的配置信息
+- /etc/yum.repos.d/ 目录下可以存在多个配置文件
+
+#### YUM基本命令
+
+- yum install SoftwareName
+- yum remove SoftwareName
+- yum update SoftwareName
+
+yum本质上是对rpm包的管理机制，因此安装也是安装rpm包
+
+#### YUM 查询
+
+- yum search keyword 	搜索
+- yum list (all | installed | recent | updates)  列出所有仓库中已有的软件，已安装的软件，最近的，软件更新的
+- yum info tigervnc		同rpm -qi tigervnc
+
+
+
+
+
+
