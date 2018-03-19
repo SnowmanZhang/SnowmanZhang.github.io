@@ -1,16 +1,41 @@
+---
+title: pandas常用方法一览
+date: 2018-03-16 11:20:51
+tags:
+- python
+- pandas
+- BI
+categories:
+- 编程
+---
+
+<!--more-->
+
+## 引入包
+
+```python
+
 # -*- coding: utf-8 -*-
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-if __name__ != '__main__':
+```
 
+
+## 常用方法一览
+
+### 序列化一维列表
+
+```python
     s = pd.Series([1,3,5,np.nan,6,8])  
     
     print(s)
     print(s.__class__)
-    
+```
+
+
     '''
     通过对列表进行序列化，得到序列化对象Series,默认元素类型float64
     0    1.0
@@ -23,14 +48,19 @@ if __name__ != '__main__':
     <class 'pandas.core.series.Series'>
     
     '''
-    
+
+### date_range序列化时间序列
+
+
+```python    
     dates = pd.date_range('20130101',periods=6)
     
     print(dates)
     print(dates.__class__)
     print(dates[0])
     print(dates[0].__class__)
-    
+```
+
     '''
     使用date_range函数对日期进行序列化，只需要一个字符串形式的起始日期和天数即可自动排演
     生成的dates对象为DatetimeIndex类，元素为Timestamp类
@@ -41,6 +71,12 @@ if __name__ != '__main__':
     2013-01-01 00:00:00
     <class 'pandas._libs.tslib.Timestamp'>
     '''
+
+### DataFrame序列化二维数组
+
+第一个参数为np的二维6*4，6行4列，index 参数为索引，columns为列表.
+
+```python
     dates = pd.date_range('20130101',periods=6)    
     df = pd.DataFrame(np.random.randn(6,4),index = dates,columns = list('ABCD'))
     
@@ -49,7 +85,10 @@ if __name__ != '__main__':
     print(df.__dict__)
     print(df['A'])
     print(df['A'].__class__)
-    
+```
+
+可以看到，`df['A']`是一个一维序列
+
     '''
                        A         B         C         D
     2013-01-01  1.209109  0.230996 -1.257127 -0.768172
@@ -60,9 +99,7 @@ if __name__ != '__main__':
     2013-01-06  0.599082  1.496589  0.490352 -0.743327
     {'is_copy': None, '_data': BlockManager
     Items: Index(['A', 'B', 'C', 'D'], dtype='object')
-    Axis 1: DatetimeIndex(['2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04',
-                   '2013-01-05', '2013-01-06'],
-                  dtype='datetime64[ns]', freq='D')
+    Axis 1: DatetimeIndex(['2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04','2013-01-05', '2013-01-06'], dtype='datetime64[ns]', freq='D')
     FloatBlock: slice(0, 4, 1), 4 x 6, dtype: float64, '_item_cache': {}, '_iloc': <pandas.core.indexing._iLocIndexer object at 0x00000216066B7F28>}
     2013-01-01    1.209109
     2013-01-02   -0.576515
@@ -75,6 +112,10 @@ if __name__ != '__main__':
     
     '''
 
+
+再次用DataFrame序列化一个二维数组，其中给入一个字典参数，每个值可以为一个单值，字符串，Timestamp对象，一维Series对象，np的一维数组，以及特殊的Categories的Series对象(一种枚举类)
+
+```python
     df2 = pd.DataFrame({'A':1.,
                         'B':pd.Timestamp('20130102'),
                         'C':pd.Series(1,index=list(range(4)),dtype='float32'),
@@ -101,6 +142,9 @@ if __name__ != '__main__':
     print(df2['E'][1])
     print(df2['B'][2])
     print(df2.values)
+```
+
+
     '''
     df2 以分列指定数据的方法产生DateFrame类
     由下展示可得，以字典形式点选的类均为Series序列类，且可以二重索引，先索引列再索引序号
@@ -162,7 +206,21 @@ if __name__ != '__main__':
     
     '''
 
+### 常用函数
+
+首先构建一个二维对象，对其使用如下函数
+
+- head    取前部分数据
+- tail    取最后n个数据
+- index   返回索引轴
+- columns 返回列轴
+- values  返回面板数据
+- describe描述性统计
+- T       转置
+- sort_index 按轴排序
+- sort_values按值排序
     
+```python
     dates = pd.date_range('20130101',periods=6)    
     df = pd.DataFrame(np.random.randn(6,4),index = dates,columns = list('ABCD'))
     
@@ -176,19 +234,9 @@ if __name__ != '__main__':
     print(df.T)
     print(df.sort_index(axis = 1,ascending=False))
     print(df.sort_values(by='B'))
-    
+```
     
     '''
-    常用函数
-    head    取前部分数据
-    tail    前n个数据
-    index   返回索引轴
-    columns 返回列轴
-    values  返回面板数据
-    describe描述性统计
-    T       转置
-    sort_index 按轴排序
-    sort_values按值排序
     
                        A         B         C         D
     2013-01-01  0.156707  2.244479 -0.222424  0.439458
@@ -239,8 +287,22 @@ if __name__ != '__main__':
     2013-01-01  0.156707  2.244479 -0.222424  0.439458
     
     '''
-    
-    
+
+
+### 常用属性
+
+构建一个二维对象。以下是一些常用方法
+
+1. 取某列---类似字典的getattr
+2. 数字切片是在切观测值
+3. 也可以使用index的内容直接进行切片(时间轴为index)
+4. loc方法用于检索二维数组里的值，如直接选取某一index值索引到该观测值
+5. loc也可以使用双重索引，形如`df.loc[:,['A','B']]`
+6. at方法用于索引到具体的值
+
+
+
+```python
     dates = pd.date_range('20130101',periods=6)    
     df = pd.DataFrame(np.random.randn(6,4),index = dates,columns = list('ABCD'))
     
@@ -255,6 +317,9 @@ if __name__ != '__main__':
     print(df.loc[:,['A','B']])
     print(df.loc[dates[0]:dates[2],['A','B']]) #亦可将dates[0] 换为字符串时间戳，或者其切片形式
     print(df.at[dates[0],'A'])
+```
+
+
     '''
     可以看见，使用loc方法怎样截取FrameData中的部分数据，包括：展示单列，索引切片，时间戳切片，
     loc方法的时间戳缩影，展示多列以及对观测值与列变量同时选取，在这里请注意哪些是无效命令
@@ -307,6 +372,20 @@ if __name__ != '__main__':
     
     '''
     
+
+### 常用属性
+
+iloc意为integer location ，即使用整型数字提取目标数据
+iloc使用扩强版的下标索引实现，如果只使用整型数字、切片则默认为对观测值序列进行操作
+如果给出两个参数，如`[1,2]`则认为取第2个观测值第3列的值，同样有效的还有
+    
+- `[3:5,1:2]` 对row 和col 同时切片
+- `[[1,2,3],[1,2]]` 对row和col同时使用列表点取其中的观测值
+- `[:,2]`选取全部row，选取第3列进行展示
+    
+PS: iat方法用于选取标量
+
+```python
     dates = pd.date_range('20130101',periods=6)    
     df = pd.DataFrame(np.random.randn(6,4),index = dates,columns = list('ABCD'))
     
@@ -318,16 +397,10 @@ if __name__ != '__main__':
     print(df.iat[1,1])
     
     
+```
+
     '''
-    iloc意为integer location ，即使用整型数字提取目标数据
-    iloc使用扩强版的下标索引实现，如果只使用整型数字、切片则默认为对观测值序列进行操作
-    如果给出两个参数，如[1,2]则认为取第2个观测值第3列的值，同样有效的还有
     
-    - [3:5,1:2] 对row 和col 同时切片
-    - [[1,2,3],[1,2]] 对row和col同时使用列表点取其中的观测值
-    - [:,2]选取全部row，选取第3列进行展示
-    
-    PS: iat方法用于选取标量
     
     
     A    0.670621
@@ -352,13 +425,6 @@ if __name__ != '__main__':
     Freq: D, Name: C, dtype: float64
     1.05324619603
     '''
-
-dates = pd.date_range('20130101',periods=6)    
-df = pd.DataFrame(np.random.randn(6,4),index = dates,columns = list('ABCD'))
-
-
-print(df)
-
 
 
 
